@@ -27,7 +27,7 @@ Jira 댓글 (!plan / !implement)
 
 | 파일 | 경로 (cwd 기준) |
 |---|---|
-| Jira 티켓 컨텍스트 | `../../context.json` |
+| Jira 티켓 컨텍스트 | `context.json` |
 | 워크스페이스 정보 | `../../workspace_info.json` |
 | 산출물 저장 위치 | `docs/` |
 | Spec-Kit | `docs/spec-kit/` |

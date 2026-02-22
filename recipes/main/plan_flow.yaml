@@ -35,8 +35,8 @@ instructions: |
   ### [실행 순서]
 
   1. [컨텍스트 로드]
-     - `../../context.json` 파일을 읽으세요. (cwd 기준: workspace/{ticket_id}/source/)
-       - ticket_id, summary, description, command, attachments 필드를 확인합니다.
+     - `context.json` 파일을 읽으세요. (source/ 안에 복사되어 있습니다)
+       - ticket_id, summary, description, command, command_args, attachments 필드를 확인합니다.
      - 첨부파일(`attachments` 경로)이 있으면 각 파일을 읽어 내용을 파악하세요.
 
   2. [작업 공간 초기화]
@@ -70,7 +70,7 @@ instructions: |
      - (Phase 4 연동 후) Jira 댓글로 결과를 보고합니다.
 
 prompt: |
-  ../../context.json 파일을 읽어 Jira 티켓 정보를 파악하고 즉시 기획 문서 생성을 시작하세요.
+  context.json 파일을 읽어 Jira 티켓 정보를 파악하고 즉시 기획 문서 생성을 시작하세요.
   현재 디렉토리는 대상 프로젝트의 소스 루트(source/)입니다.
   모든 산출물은 docs/ 하위에 저장하세요.
 
