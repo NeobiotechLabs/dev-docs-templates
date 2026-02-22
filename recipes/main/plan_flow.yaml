@@ -73,3 +73,10 @@ prompt: |
   ../../context.json 파일을 읽어 Jira 티켓 정보를 파악하고 즉시 기획 문서 생성을 시작하세요.
   현재 디렉토리는 대상 프로젝트의 소스 루트(source/)입니다.
   모든 산출물은 docs/ 하위에 저장하세요.
+
+  [요구사항 파악 순서]
+  1. command_args 필드 확인 → 비어있지 않으면 이것이 사용자의 핵심 요청입니다
+  2. description 필드 확인 → command_args가 없으면 이것을 요구사항으로 사용
+  3. 둘 다 비어있으면 "요구사항 없음"을 docs/ERROR.md에 기록하고 종료
+
+  command_args와 description이 모두 있으면 command_args를 우선합니다.

@@ -41,16 +41,24 @@ Jira 댓글 (!plan / !implement)
 
 ```json
 {
-  "ticket_id":   "AUT-1",
-  "command":     "!plan",
-  "reporter":    "user@company.com",
-  "summary":     "결제 기능 구현",
-  "description": "상세 설명...",
-  "issue_type":  "작업",
-  "priority":    "Medium",
-  "attachments": ["path/to/file.png"]
+  "ticket_id":    "AUT-1",
+  "command":      "!plan",
+  "command_args": "fibonazzi 수열을 보여주는 기능",
+  "reporter":     "user@company.com",
+  "summary":      "업무 요약",
+  "description":  "티켓 본문 (비어 있을 수 있음)",
+  "issue_type":   "작업",
+  "priority":     "Medium",
+  "attachments":  ["path/to/file.png"]
 }
 ```
+
+### 요구사항 우선순위 (중요)
+
+1. **`command_args`** — Jira 댓글에서 `!plan` 뒤에 입력한 실제 요청 텍스트. **최우선 사용**
+2. **`description`** — Jira 티켓 본문
+3. **`summary`** — 티켓 제목
+4. `command_args`와 `description`이 **모두 비어있으면** 작업을 중단하고 실패를 기록하세요.
 
 ---
 
@@ -77,6 +85,7 @@ Jira 댓글 (!plan / !implement)
 
 ## 주의사항
 
-- `context.json`이 비어 있거나 필드가 누락된 경우, 작업을 진행하지 말고 실패 이유를 기록하세요.
+- `context.json`의 **`command_args`를 반드시 먼저 확인**하세요. 비어있으면 `description`을 확인하세요.
+- 둘 다 비어있으면 임의로 요구사항을 만들지 말고, 실패를 기록하고 종료하세요.
 - 첨부파일(`attachments`)이 있으면 반드시 읽고 내용을 반영하세요.
 - 인터넷 검색이 필요하면 자유롭게 사용하되, 불필요한 외부 의존성은 추가하지 마세요.
