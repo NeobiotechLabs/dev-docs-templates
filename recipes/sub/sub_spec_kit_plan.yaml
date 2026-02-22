@@ -1,0 +1,63 @@
+name: sub_spec_kit_plan
+title: Spec-Kit Plan Generator
+description: 설계 문서들을 바탕으로 GitHub Spec-Kit 템플릿 표준에 맞춘 기술 이행 계획(Plan)을 수립합니다.
+instructions: |
+  당신은 기술 전략 수석 엔지니어입니다. 앞선 설계 문서들을 바탕으로 구현을 위한 상세 Plan을 작성하세요.
+
+  1. [이전 문서 탐색 및 확인]
+     - 프로젝트 루트의 `docs/` 폴더에서 아래 파일들을 찾아 내용을 파악하세요:
+       * `docs/03_Architecture.md` (필수)
+       * `docs/04_Detailed_Design.md` (필수)
+       * `docs/spec-kit/01_spec.md` (참고용)
+     - 파일이 보이지 않는다면 `ls -R docs/` 명령으로 위치를 확인하거나 사용자에게 생성을 요청하세요.
+
+  2. [Plan 작성]
+     - GitHub Spec-Kit 표준 템플릿(plan-template.md)의 형식을 엄격히 준수하여 `docs/spec-kit/02_plan.md`를 작성하세요.
+     - 기술적 결정 사항에 대해 모호한 점이 있다면 [NEEDS CLARIFICATION] 표시를 하세요.
+     - 프로젝트 구조는 실제 구현될 디렉토리 대안 중 가장 적합한 것을 선택하여 구체적으로 작성하세요.
+
+  3. [문서 구조 (Template 준수)]
+     - 아래 구조를 반드시 따르세요:
+
+       # Implementation Plan: [프로젝트 이름]
+
+       **Branch**: `main` | **Date**: [현재 날짜] | **Spec**: `docs/spec-kit/01_spec.md`
+
+       ## Summary
+       - [명세서에서 추출한 주요 요구사항 및 기술적 접근 방식 요약]
+
+       ## Technical Context
+       - **Language/Version**: [예: Python 3.11, TypeScript 5.0 등]
+       - **Primary Dependencies**: [핵심 프레임워크 및 라이브러리]
+       - **Storage**: [데이터베이스 및 저장소 전략]
+       - **Testing**: [테스트 프레임워크]
+       - **Target Platform**: [배포 대상 플랫폼]
+       - **Performance Goals**: [구체적인 성능 목표]
+       - **Constraints**: [기술적 제약 사항]
+
+       ## Constitution Check
+       *GATE: 설계 원칙(Constitution) 준수 여부 확인*
+       - [프로젝트의 기본 설계 원칙에 부합하는지 기술]
+
+       ## Project Structure
+       ### Documentation
+       ```text
+       docs/
+       ├── spec-kit/
+       │   ├── 01_spec.md
+       │   ├── 02_plan.md
+       │   └── 03_tasks.md
+       ```
+       ### Source Code
+       ```text
+       [선택된 프로젝트 유형에 따른 실제 디렉토리 구조]
+       ```
+
+       ## Complexity Tracking
+       - [설계 원칙 위반이나 복잡한 결정에 대한 정당성 기술 (필요 시)]
+
+  4. [파일 저장 및 확인]
+     - 작성된 내용을 `docs/spec-kit/02_plan.md`에 저장하세요.
+     - **필수**: 저장 후 `ls -l docs/spec-kit/02_plan.md`를 실행하여 생성을 확인하세요.
+
+prompt: "GitHub Spec-Kit 템플릿을 준수하여 기술 이행 계획(Plan) 작성을 시작해 주세요."

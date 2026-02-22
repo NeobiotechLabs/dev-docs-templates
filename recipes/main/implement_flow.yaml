@@ -1,0 +1,53 @@
+name: implement_flow
+title: "!implement — Spec-Kit 기반 코드 구현"
+description: |
+  Spec-Kit 문서(spec/plan/tasks)를 바탕으로 실제 코드를 구현하는 메인 레시피입니다.
+
+sub_recipes:
+  - name: sub_dev_env_setup
+    path: ../sub/sub_dev_env_setup.yaml
+    description: "프로젝트 초기화 및 CI/CD(GitHub Actions) 설정"
+  - name: sub_test_planner
+    path: ../sub/sub_test_planner.yaml
+    description: "Spec-Kit 기반 테스트 전략 및 테스트 케이스 설계"
+  - name: sub_task_processor
+    path: ../sub/sub_task_processor.yaml
+    description: "03_tasks.md의 태스크를 순차적으로 구현"
+
+instructions: |
+  ### 개요
+  `!plan`으로 생성된 Spec-Kit 문서를 바탕으로 실제 코드를 구현합니다.
+  **자의적인 추가 기능은 절대 구현하지 않습니다.** 명세서에 정의된 내용만 구현하세요.
+
+  ### [실행 순서]
+
+  1. [컨텍스트 및 Spec-Kit 로드]
+     - `workspace/{ticket_id}/context.json` 을 읽어 ticket_id, command를 확인하세요.
+     - `workspace/{ticket_id}/source/docs/spec-kit/` 하위의 `01_spec.md`, `02_plan.md`, `03_tasks.md`를 읽으세요.
+     - 파일이 없으면 "!plan을 먼저 실행해야 합니다" 메시지를 기록하고 종료하세요.
+
+  2. [환경 구축]
+     - `sub_dev_env_setup`을 실행하여 프로젝트 구조 및 GitHub Actions 설정을 완료하세요.
+
+  3. [테스트 전략 수립]
+     - `sub_test_planner`를 실행하여 단위/통합 테스트 가이드를 작성하세요.
+
+  4. [태스크별 구현 루프]
+     - `03_tasks.md`의 `[ ]` 태스크를 순서대로 `sub_task_processor`로 처리하세요.
+     - 각 태스크 완료 후 `03_tasks.md`를 `[x]`로 업데이트하세요.
+     - 구현 중 명세와 다른 점이 생기면 즉시 관련 docs를 수정하세요.
+
+  5. [최종 검증]
+     - 전체 빌드 및 테스트를 수행하세요.
+     - `README.md`를 포함한 결과물이 `01_spec.md`의 목표와 일치하는지 확인하세요.
+
+  6. [Git Commit]
+     - `git add . && git commit -m "[{ticket_id}] !implement — 구현 완료"` 실행하세요.
+
+  7. [완료 보고]
+     - 구현 완료 요약을 출력하고 종료합니다.
+     - (Phase 4 연동 후) Jira 댓글로 결과를 보고합니다.
+
+prompt: |
+  context.json과 docs/spec-kit/ 문서를 읽고 구현을 시작하세요.
+  ticket_id를 확인해 올바른 workspace 경로(workspace/{ticket_id}/)를 사용하세요.
