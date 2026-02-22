@@ -65,9 +65,11 @@ instructions: |
   8. [Git Commit]
      - `git add docs/ && git commit -m "[{ticket_id}] !plan — 기획 문서 생성"` 실행하세요.
 
-  9. [완료 보고]
-     - 생성된 파일 목록을 확인하고 작업을 종료합니다.
-     - (Phase 4 연동 후) Jira 댓글로 결과를 보고합니다.
+  9. [Jira 결과 보고 및 질문]
+     - 작업이 완료되면 `.agents/skills/jira-commenter/SKILL.md`를 참조하여 완료 댓글을 게시하세요.
+       - `--type done --summary "{생성된 파일 목록 요약}"`
+     - 만약 진행에 필요한 핵심 정보가 부족하다면, 임의로 지어내지 말고 질문 댓글을 게시한 후 세션을 종료하세요.
+       - `--type question --summary "{질문 내용}" --session {ticket_id}`
 
 prompt: |
   context.json 파일을 읽어 Jira 티켓 정보를 파악하고 즉시 기획 문서 생성을 시작하세요.
