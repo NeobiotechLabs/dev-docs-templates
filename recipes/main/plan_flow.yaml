@@ -35,33 +35,32 @@ instructions: |
   ### [실행 순서]
 
   1. [컨텍스트 로드]
-     - `workspace/{ticket_id}/context.json` 파일을 읽으세요.
+     - `../../context.json` 파일을 읽으세요. (cwd 기준: workspace/{ticket_id}/source/)
        - ticket_id, summary, description, command, attachments 필드를 확인합니다.
-     - 첨부파일(`attachments`)이 있으면 각 파일을 읽어 내용을 파악하세요.
-     - `workspace/{ticket_id}/source/` 가 대상 프로젝트 루트임을 확인하세요.
+     - 첨부파일(`attachments` 경로)이 있으면 각 파일을 읽어 내용을 파악하세요.
 
   2. [작업 공간 초기화]
-     - `mkdir -p workspace/{ticket_id}/source/docs/spec-kit` 를 실행하세요.
+     - `mkdir -p docs/spec-kit` 를 실행하세요.
 
   3. [PRD 생성]
      - context.json의 summary와 description을 바탕으로 `sub_prd_generator`를 실행하세요.
-     - 산출물: `workspace/{ticket_id}/source/docs/01_PRD.md`
+     - 산출물: `docs/01_PRD.md`
 
   4. [SRS 생성]
      - PRD를 기반으로 `sub_srs_analyzer`를 실행하세요.
-     - 산출물: `workspace/{ticket_id}/source/docs/02_SRS.md`
+     - 산출물: `docs/02_SRS.md`
 
   5. [아키텍처 설계]
      - `sub_arch_designer`를 실행하세요.
-     - 산출물: `workspace/{ticket_id}/source/docs/03_Architecture.md`
+     - 산출물: `docs/03_Architecture.md`
 
   6. [상세 설계]
      - `sub_detail_designer`를 실행하세요.
-     - 산출물: `workspace/{ticket_id}/source/docs/04_Detailed_Design.md`
+     - 산출물: `docs/04_Detailed_Design.md`
 
   7. [Spec-Kit 생성]
      - `sub_spec_kit_spec`, `sub_spec_kit_plan`, `sub_spec_kit_tasks` 순서로 실행하세요.
-     - 산출물: `workspace/{ticket_id}/source/docs/spec-kit/01_spec.md`, `02_plan.md`, `03_tasks.md`
+     - 산출물: `docs/spec-kit/01_spec.md`, `02_plan.md`, `03_tasks.md`
 
   8. [Git Commit]
      - `git add docs/ && git commit -m "[{ticket_id}] !plan — 기획 문서 생성"` 실행하세요.
@@ -71,5 +70,6 @@ instructions: |
      - (Phase 4 연동 후) Jira 댓글로 결과를 보고합니다.
 
 prompt: |
-  context.json을 읽어 Jira 티켓 정보를 파악하고, 즉시 기획 문서 생성을 시작하세요.
-  ticket_id를 확인하여 올바른 workspace 경로(workspace/{ticket_id}/context.json)를 사용하세요.
+  ../../context.json 파일을 읽어 Jira 티켓 정보를 파악하고 즉시 기획 문서 생성을 시작하세요.
+  현재 디렉토리는 대상 프로젝트의 소스 루트(source/)입니다.
+  모든 산출물은 docs/ 하위에 저장하세요.

@@ -22,15 +22,18 @@ Jira 댓글 (!plan / !implement)
 
 ## 핵심 파일 경로
 
-| 파일 | 설명 |
-|---|---|
-| `workspace/{ticket_id}/context.json` | Jira 티켓 메타데이터 (summary, description, command 등) |
-| `workspace/{ticket_id}/workspace_info.json` | 레포 정보 (branch, source_dir) |
-| `workspace/{ticket_id}/source/` | git clone된 대상 프로젝트 루트 |
-| `workspace/{ticket_id}/source/docs/` | 산출물 저장 위치 |
-| `workspace/{ticket_id}/source/common-agent-assets/` | 이 레포 (submodule) |
+> 현재 working directory는 **`workspace/{ticket_id}/source/`** 입니다.  
+> Goose는 이 디렉토리에서 실행됩니다.
 
-**중요**: 모든 산출물(PRD, SRS, spec-kit 등)은 반드시 `source/docs/` 하위에 저장하세요.
+| 파일 | 경로 (cwd 기준) |
+|---|---|
+| Jira 티켓 컨텍스트 | `../../context.json` |
+| 워크스페이스 정보 | `../../workspace_info.json` |
+| 산출물 저장 위치 | `docs/` |
+| Spec-Kit | `docs/spec-kit/` |
+| 레시피 디렉토리 | `common-agent-assets/recipes/` |
+
+**중요**: 모든 산출물(PRD, SRS, spec-kit 등)은 반드시 `docs/` 하위에 저장하세요.
 
 ---
 
