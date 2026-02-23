@@ -30,12 +30,16 @@ sub_recipes:
 instructions: |
   ### 개요
   Jira 티켓의 컨텍스트를 기반으로 전체 SDLC 문서를 자동 생성합니다.
-  **사용자 인터뷰는 진행하지 않습니다.** 모든 정보는 context.json에서 읽습니다.
+  **사용자 응답 대기 없이 백그라운드 CI 환경에서 실행되므로, 절대로 대화를 중단하거나 승인을 요청하며 턴을 마치지 마십시오.**
+  **항상 1개 이상의 Tool(도구)을 호출하여 모든 단계를 끝까지 연속으로 실행해야 합니다.**
+
+  모든 정보는 `context.json`에서 읽습니다.
 
   ### [실행 순서]
 
   1. [컨텍스트 로드]
-     - `context.json` 파일을 읽으세요. (source/ 안에 복사되어 있습니다)
+     - `bash` 도구(`cat context.json`)나 `text_editor` 도구를 즉각 사용하여 `context.json` 파일을 읽으세요. 
+     - ⚠️ 절대로 파일을 읽기 위해 `code_execution`이나 `subagent`를 호출하지 마십시오. 직접 읽어야 합니다.
        - ticket_id, summary, description, command, command_args, attachments 필드를 확인합니다.
      - 첨부파일(`attachments` 경로)이 있으면 각 파일을 읽어 내용을 파악하세요.
 
@@ -66,14 +70,15 @@ instructions: |
      - 이번 작업에서 변경된 핵심 내용(어떤 점이 업데이트 되었는지)을 한글로 요약하여 `docs/summary.md` 파일로 작성하세요.
      - `git add docs/ && git commit -m "[{ticket_id}] !plan — 기획 문서 생성"` 실행하세요.
 
-  9. [Jira 결과 보고 및 질문]
-     - 작업이 완료되면 `.agents/skills/jira-commenter/SKILL.md`를 참조하여 완료 댓글을 게시하세요.
-       - `--type done --summary "{생성된 파일 목록 요약}"`
-     - 만약 진행에 필요한 핵심 정보가 부족하다면, 임의로 지어내지 말고 질문 댓글을 게시한 후 세션을 종료하세요.
+  9. [질문 게시]
+     - 만약 진행에 필요한 핵심 정보가 부족하다면, 임의로 지어내지 말고 `.agents/skills/jira-commenter/SKILL.md`를 참조하여 질문 댓글을 게시한 후 세션을 종료하세요.
        - `--type question --summary "{질문 내용}" --session {ticket_id}`
 
 prompt: |
-  context.json 파일을 읽어 Jira 티켓 정보를 파악하고 즉시 기획 문서 생성을 시작하세요.
+  context.json 파일을 먼저 읽어 Jira 티켓 정보를 파악하고 즉시 기획 산출물 생성을 시작하세요.
+  만약 중간에 결과를 보고하거나 다음 단계를 예고해야 하더라도, 절대로 도구(Tool) 호출 없이 텍스트만 출력하지 마십시오. 단 한 번이라도 도구 호출 없이 텍스트만 응답하면 즉시 파이프라인이 에러 처리되어 강제 종료됩니다. 
+  "~작업을 시작하겠습니다"라고 말하지 말고 묵묵히 즉시 다음 레시피나 명령어를 실행하세요.
+  
   현재 디렉토리는 대상 프로젝트의 소스 루트(source/)입니다.
   모든 산출물은 docs/ 하위에 저장하세요.
 

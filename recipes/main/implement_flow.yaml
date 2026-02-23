@@ -17,13 +17,17 @@ sub_recipes:
 instructions: |
   ### 개요
   `!plan`으로 생성된 Spec-Kit 문서를 바탕으로 실제 코드를 구현합니다.
+  **사용자 응답 대기 없이 백그라운드 CI 환경에서 실행되므로, 절대로 대화를 중단하거나 승인을 요청하며 턴을 마치지 마십시오.**
+  **항상 1개 이상의 Tool(도구)을 호출하여 모든 단계를 끝까지 연속으로 실행해야 합니다.**
+
   **자의적인 추가 기능은 절대 구현하지 않습니다.** 명세서에 정의된 내용만 구현하세요.
 
   ### [실행 순서]
 
   1. [컨텍스트 및 Spec-Kit 로드]
-     - `context.json` 을 읽어 ticket_id, command, command_args를 확인하세요. (source/ 안에 복사됨)
-     - `docs/spec-kit/` 하위의 `01_spec.md`, `02_plan.md`, `03_tasks.md`를 읽으세요.
+     - `bash` 도구나 `text_editor` 도구를 사용하여 직접 `context.json` 을 읽고 ticket_id, command, command_args를 확인하세요.
+     - ⚠️ 파일을 읽기 위해 `code_execution`이나 `subagent`를 호출하지 마십시오.
+     - `docs/spec-kit/` 하위의 `01_spec.md`, `02_plan.md`, `03_tasks.md`를 차례로 읽으세요.
      - 파일이 없으면 '!plan을 먼저 실행해야 합니다' 메시지를 기록하고 종료하세요.
 
   2. [환경 구축]
@@ -49,5 +53,8 @@ instructions: |
      - (Phase 4 연동 후) Jira 댓글로 결과를 보고합니다.
 
 prompt: |
-  ../../context.json 과 docs/spec-kit/ 문서를 읽고 구현을 시작하세요.
+  context.json 과 docs/spec-kit/ 문서를 먼저 읽고 즉시 구현을 시작하세요.
+  만약 중간에 결과를 보고하거나 다음 단계를 예고해야 하더라도, 절대로 도구(Tool) 호출 없이 텍스트만 출력하지 마십시오. 단 한 번이라도 도구 호출 없이 텍스트만 응답하면 즉시 파이프라인이 에러 처리되어 강제 종료됩니다. 
+  "~작업을 시작하겠습니다"라고 말하지 말고 묵묵히 바로 명령어/도구를 실행하세요.
+  
   현재 디렉토리는 대상 프로젝트의 소스 루트(source/)입니다.
