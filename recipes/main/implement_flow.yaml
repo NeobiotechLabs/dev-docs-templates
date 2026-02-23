@@ -45,8 +45,8 @@ instructions: |
      - 전체 빌드 및 테스트를 수행하세요.
      - `README.md`를 포함한 결과물이 `01_spec.md`의 목표와 일치하는지 확인하세요.
 
-  6. [Git Commit]
-     - `git add . && git commit -m "[{ticket_id}] !implement — 구현 완료"` 실행하세요.
+  6. [Git Commit 및 Push]
+     - `git add . && git commit -m "[{ticket_id}] !implement — 구현 완료" && git push -u origin HEAD` 명령을 실행하세요.
 
   7. [완료 보고]
      - 구현 완료 요약을 출력하고 종료합니다.

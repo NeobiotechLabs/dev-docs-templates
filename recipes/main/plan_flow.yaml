@@ -66,9 +66,9 @@ instructions: |
      - `sub_spec_kit_spec`, `sub_spec_kit_plan`, `sub_spec_kit_tasks` 순서로 실행하세요.
      - 산출물: `docs/spec-kit/01_spec.md`, `02_plan.md`, `03_tasks.md`
 
-  8. [작업 요약 및 Git Commit]
+  8. [작업 요약 및 Git Commit/Push]
      - 이번 작업에서 변경된 핵심 내용(어떤 점이 업데이트 되었는지)을 한글로 요약하여 `docs/summary.md` 파일로 작성하세요.
-     - `git add docs/ && git commit -m "[{ticket_id}] !plan — 기획 문서 생성"` 실행하세요.
+     - `git add docs/ && git commit -m "[{ticket_id}] !plan — 기획 문서 생성" && git push -u origin HEAD` 명령을 실행하세요.
 
   9. [질문 게시]
      - 만약 진행에 필요한 핵심 정보가 부족하다면, 임의로 지어내지 말고 `.agents/skills/jira-commenter/SKILL.md`를 참조하여 질문 댓글을 게시한 후 세션을 종료하세요.
