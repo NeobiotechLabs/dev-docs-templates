@@ -25,8 +25,9 @@ instructions: |
   ### [실행 순서]
 
   1. [컨텍스트 및 Spec-Kit 로드]
-     - `bash` 도구나 `text_editor` 도구를 사용하여 직접 `context.json` 을 읽고 ticket_id, command, command_args를 확인하세요.
-     - ⚠️ 파일을 읽기 위해 `code_execution`이나 `subagent`를 호출하지 마십시오.
+     - Windows 환경의 한글 깨짐 방지를 위해 **반드시** Python과 UTF-8 인코딩을 사용하여 `context.json` 파일을 읽으세요.
+       `python -c "open('context.json', encoding='utf-8').read()"`
+     - ⚠️ 절대로 `cat context.json` 으로 읽거나 파일 읽기용 `code_execution` (Goose built-in 외)을 사용하지 마십시오.
      - `docs/spec-kit/` 하위의 `01_spec.md`, `02_plan.md`, `03_tasks.md`를 차례로 읽으세요.
      - 파일이 없으면 '!plan을 먼저 실행해야 합니다' 메시지를 기록하고 종료하세요.
 

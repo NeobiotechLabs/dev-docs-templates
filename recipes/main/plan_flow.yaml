@@ -38,10 +38,11 @@ instructions: |
   ### [실행 순서]
 
   1. [컨텍스트 로드]
-     - `bash` 도구(`cat context.json`)나 `text_editor` 도구를 즉각 사용하여 `context.json` 파일을 읽으세요. 
-     - ⚠️ 절대로 파일을 읽기 위해 `code_execution`이나 `subagent`를 호출하지 마십시오. 직접 읽어야 합니다.
+     - Windows 환경의 인코딩 문제(한글 깨짐)를 방지하기 위해 **반드시** 다음과 같은 Python 명령어나 `text_editor` 도구를 사용하여 `context.json` 파일을 UTF-8로 읽으세요.
+       `python -c "open('context.json', encoding='utf-8').read()"`
+     - ⚠️ 절대로 `cat context.json` 이나 파일 읽기용 `code_execution` (Goose built-in 외)을 사용하지 마십시오.
        - ticket_id, summary, description, command, command_args, attachments 필드를 확인합니다.
-     - 첨부파일(`attachments` 경로)이 있으면 각 파일을 읽어 내용을 파악하세요.
+     - 첨부파일(`attachments` 경로)이 있으면 동일한 방식으로 각 파일을 읽어 내용을 파악하세요.
 
   2. [작업 공간 초기화]
      - `mkdir -p docs/spec-kit` 를 실행하세요.
