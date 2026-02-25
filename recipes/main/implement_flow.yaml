@@ -13,6 +13,9 @@ sub_recipes:
   - name: sub_task_processor
     path: ../sub/sub_task_processor.yaml
     description: "03_tasks.md의 태스크를 순차적으로 구현"
+  - name: sub_context_compaction
+    path: ../sub/sub_context_compaction.yaml
+    description: "구현 완료 내역을 session_context.md에 요약 및 압축"
 
 instructions: |
   ### 개요
@@ -28,6 +31,7 @@ instructions: |
      - Windows 환경의 한글 깨짐 방지를 위해 **반드시** Python과 UTF-8 인코딩을 사용하여 `context.json` 파일을 읽으세요.
        `python -c "open('context.json', encoding='utf-8').read()"`
      - ⚠️ 절대로 `cat context.json` 으로 읽거나 파일 읽기용 `code_execution` (Goose built-in 외)을 사용하지 마십시오.
+     - `docs/progress/session_context.md` 파일이 존재할 경우 스캔하여, 프로젝트 전체를 뒤지지 않고도 최신 작업 컨텍스트를 파악합니다.
      - `docs/spec-kit/` 하위의 `01_spec.md`, `02_plan.md`, `03_tasks.md`를 차례로 읽으세요.
      - 파일이 없으면 '!plan을 먼저 실행해야 합니다' 메시지를 기록하고 종료하세요.
 
@@ -46,9 +50,9 @@ instructions: |
      - 전체 빌드 및 테스트를 수행하세요.
      - `README.md`를 포함한 결과물이 `01_spec.md`의 목표와 일치하는지 확인하세요.
 
-  6. [구현 요약 작성]
-     - 이번 구현 작업에서 작성/수정된 코드 및 파일 내역, 특이사항을 한글로 요약하여 `docs/summary.md` 파일을 **반드시 덮어쓰기(새로 작성)** 하세요.
-     - (이전 기획(!plan) 요약 내용을 그대로 두지 말고 지운 뒤 구현(Implementation) 내역으로 교체해야 합니다.)
+  6. [구현 요약 및 컨텍스트 압축]
+     - 이번 구현 작업에서 작성/수정된 코드 및 파일 내역, 특이사항을 한글로 요약하여 `docs/summary.md` 파일을 **반드시 새로 작성(덮어쓰기)** 하세요.
+     - `sub_context_compaction`을 수행하여 `session_context.md`에 이번 구현 내역과 트러블슈팅/해결 사항을 갱신 및 기존 내용을 압축하세요.
 
   7. [전역 지도(.goosehints) 갱신]
      - 이번 구현으로 인해 새로운 파일이 생성되거나 폴더 구조가 변경되었다면, 반드시 프로젝트 루트의 `.goosehints` 맵핑 정보를 최신 상태로 업데이트하세요.

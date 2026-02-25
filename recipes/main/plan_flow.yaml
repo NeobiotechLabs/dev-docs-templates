@@ -26,6 +26,9 @@ sub_recipes:
   - name: sub_spec_kit_tasks
     path: ../sub/sub_spec_kit_tasks.yaml
     description: "Spec-Kit 태스크(Tasks) 분할"
+  - name: sub_context_compaction
+    path: ../sub/sub_context_compaction.yaml
+    description: "컨텍스트 압축 및 요약 업데이트"
 
 instructions: |
   ### 개요
@@ -43,6 +46,7 @@ instructions: |
      - ⚠️ 절대로 `cat context.json` 이나 파일 읽기용 `code_execution` (Goose built-in 외)을 사용하지 마십시오.
        - ticket_id, summary, description, command, command_args, attachments 필드를 확인합니다.
      - 첨부파일(`attachments` 경로)이 있으면 동일한 방식으로 각 파일을 읽어 내용을 파악하세요.
+     - 전체 코드베이스를 불필요하게 스캔하는 것을 막기 위해 `docs/progress/session_context.md` 가 존재한다면 **반드시 읽어** 기존 컨텍스트와 아키텍처 맥락을 파악하세요.
 
   2. [작업 공간 초기화]
      - `mkdir -p docs/spec-kit` 를 실행하세요.
@@ -51,31 +55,24 @@ instructions: |
      - 프로젝트 루트에 `.goosehints` 파일이 없거나 내용이 부실하다면, 현재 디렉토리 구조와 주요 파일들을 스캔하여 간단한 요약본을 `.goosehints` 파일로 생성하세요.
      - 이 지도 파일은 향후 토큰 낭비를 막고 전체 구조를 빠르게 파악하는 데 쓰입니다.
 
-  4. [PRD 생성]
+  4. [PRD 생성 (필요 시)]
      - context.json의 summary와 description을 바탕으로 `sub_prd_generator`를 실행하세요.
      - 산출물: `docs/01_PRD.md`
 
-  5. [SRS 생성]
-     - PRD를 기반으로 `sub_srs_analyzer`를 실행하세요.
-     - 산출물: `docs/02_SRS.md`
+  5. [SRS 및 아키텍처 갱신 보류 / 분리]
+     - ⚠️ 이번 작업 기획에서는 매번 `02_SRS.md`나 아키텍처 전역 문서를 무겁게 재생성하지 마십시오.
+     - 구현에 즉각적으로 쓰일 `spec-kit` 하위 문서를 만드는 데 집중합니다.
 
-  6. [아키텍처 설계]
-     - `sub_arch_designer`를 실행하세요.
-     - 산출물: `docs/03_Architecture.md`
-
-  7. [상세 설계]
-     - `sub_detail_designer`를 실행하세요.
-     - 산출물: `docs/04_Detailed_Design.md`
-
-  8. [Spec-Kit 생성]
-     - `sub_spec_kit_spec`, `sub_spec_kit_plan`, `sub_spec_kit_tasks` 순서로 실행하세요.
+  6. [Spec-Kit 생성]
+     - 변경 사항에 맞게 `sub_spec_kit_spec`, `sub_spec_kit_plan`, `sub_spec_kit_tasks` 순서로 실행하세요.
      - 산출물: `docs/spec-kit/01_spec.md`, `02_plan.md`, `03_tasks.md`
 
-  9. [작업 요약 및 Git Commit/Push]
-     - 이번 작업에서 변경된 핵심 내용(어떤 점이 업데이트 되었는지)을 한글로 요약하여 `docs/summary.md` 파일로 작성하세요.
-     - `git add docs/ .goosehints && git commit -m "[{ticket_id}] !plan — 기획 문서 생성" && git push -u origin HEAD` 명령을 실행하세요.
+  7. [작업 요약 및 컨텍스트 압축]
+     - 이번 기획 작업에서 변경된 핵심 내용을 한글로 요약하여 `docs/summary.md` 파일로 새로 작성하세요.
+     - `sub_context_compaction`을 수행하여 `session_context.md`에 이번 기획 방향을 짧게 갱신/압축하세요.
+     - `git add docs/ .goosehints && git commit -m "[{ticket_id}] !plan — 기획 문서 생성 및 맥락 갱신" && git push -u origin HEAD` 명령을 실행하세요.
 
-  10. [질문 게시]
+  8. [질문 게시]
      - 만약 진행에 필요한 핵심 정보가 부족하다면, 임의로 지어내지 말고 `.agents/skills/jira-commenter/SKILL.md`를 참조하여 질문 댓글을 게시한 후 세션을 종료하세요.
        - `--type question --summary "{질문 내용}" --session {ticket_id}`
 

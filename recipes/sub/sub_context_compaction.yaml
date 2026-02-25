@@ -1,0 +1,23 @@
+name: sub_context_compaction
+title: "Sub-Recipe — 세션 컨텍스트 요약 및 압축 (Compaction)"
+description: |
+  작업 완료 전에 장기 세션 히스토리로 인한 토큰 낭비를 막고, 향후 AI가 프로젝트 전반의 
+  흐름을 빠르게 파악할 수 있도록 `docs/progress/session_context.md`를 갱신/압축합니다.
+
+instructions: |
+  1. [현재 세션 컨텍스트 확인]
+     - `docs/progress/session_context.md` 파일이 존재하는지 확인합니다.
+     - 있다면 기존 내용을 읽어 어떤 작업들이 완료되었고, 어떤 문제들이 해결되었는지 파악합니다.
+
+  2. [이번 작업 내역 머지 및 압축]
+     - 방금 수행한 작업(summary.md 내역 등)의 핵심 사항(Troubleshooting, 완료된 기능 등)을 요약합니다.
+     - 기존 `session_context.md`의 완료 목록에 새로운 내용을 추가하고, 더 이상 중요하지 않은 세부 로그나 장황한 이슈는 한 줄 짜리 "과거 해결 상태"로 압축(Compaction)합니다.
+     - 향후 다른 AI 에이전트가 이 파일을 읽었을 때 프로젝트 전체를 스캔하지 않고도 "지금까지의 맥락"을 100% 이해할 수 있도록 명확하게 정리해야 합니다.
+
+  3. [문서 업데이트]
+     - 갱신된 내용을 `docs/progress/session_context.md` 에 덮어씁니다.
+     - (기존의 주요 Next Steps나 Master Plan의 미완료 항목은 유실되지 않도록 그대로 유지해야 합니다.)
+
+prompt: |
+  프로젝트의 맥락 유지를 위해 `docs/progress/session_context.md`를 최신화하고 압축합니다.
+  너무 장황한 과거 에러 로그는 과감히 줄이고, 완료된 기능과 현재 구조의 핵심, 그리고 다음 목표(Next Steps)가 두드러지게 템플릿화하세요.
