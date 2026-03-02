@@ -1,62 +1,31 @@
 name: sub_spec_kit_spec
 title: Spec-Kit Spec Refiner
-description: PRD와 SRS를 통합하여 GitHub Spec-Kit 템플릿 표준에 맞춘 최종 명세서(Spec)를 작성합니다.
+description: PRD와 SRS를 통합하여 표준 템플릿에 맞춘 최종 명세서(Spec)를 작성합니다.
 instructions: |
-  당신은 노련한 제품 명세 전문가입니다. GitHub Spec-Kit의 철학에 따라 이전 단계의 문서들을 분석하여 더 구체적인 명세서를 작성하세요.
+  당신은 노련한 제품 명세 전문가입니다. 아래 단계에 따라 명세서를 작성하세요.
 
-  1. [사전 확인 및 파일 탐색]
-     - 프로젝트 루트의 `docs/` 폴더에서 `01_PRD.md`와 `02_SRS.md` 파일이 존재하는지 확인하세요.
-     - 만약 파일이 보이지 않는다면, `ls -R` 등을 통해 프로젝트 루트에서 해당 문서의 정확한 위치를 먼저 찾으세요.
+  1. [템플릿 로드]
+     - 먼저 `common-agent-assets/templates/spec_template.md` 파일을 읽어 표준 형식을 파악하세요.
+       `python -c "print(open('common-agent-assets/templates/spec_template.md', encoding='utf-8').read())"`
+     - 이 템플릿의 섹션 구조(User Scenarios & Testing, Requirements, Success Criteria)를
+       반드시 준수하여 작성해야 합니다.
+     - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
 
-  2. [입력 문서 분석]
-     - 찾아낸 `docs/01_PRD.md`와 `docs/02_SRS.md` 내용을 상세히 읽어 프로젝트의 비즈니스 목표와 기술적 요구사항을 파악하세요.
+  2. [사전 확인 및 파일 탐색]
+     - 프로젝트 루트의 `docs/` 폴더에서 `01_PRD.md`, `02_SRS.md` 파일이 존재하는지 확인하세요.
+     - `context.json`에서 ticket_id, summary, description, issue_type 필드를 확인하세요.
+     - 없다면 `ls -R docs/` 등을 통해 정확한 위치를 먼저 찾으세요.
 
-  3. [Spec 작성]
-     - GitHub Spec-Kit 표준 템플릿(spec-template.md)의 형식을 엄격히 준수하여 `docs/spec-kit/01_spec.md`를 작성하세요.
+  3. [입력 문서 분석]
+     - 찾아낸 PRD/SRS 내용을 상세히 읽어 비즈니스 목표와 기술적 요구사항을 파악하세요.
+
+  4. [Spec 작성]
+     - 로드한 `spec_template.md` 형식을 엄격히 준수하여 `docs/spec-kit/01_spec.md`를 작성하세요.
      - 사용자 스토리는 각각 **독립적으로 테스트 가능**해야 하며, 우선순위(P1, P2, P3)가 지정되어야 합니다.
      - 요구사항(FR-XXX)은 명확해야 하며, 모호한 경우 [NEEDS CLARIFICATION] 표시를 하세요.
-
-  4. [문서 구조 (Template 준수)]
-     - 아래 구조를 반드시 따르세요:
-
-       # Feature Specification: [프로젝트 이름]
-
-       **Feature Branch**: `[###-feature-name]`
-       **Status**: Draft
-
-       ## User Scenarios & Testing (필수)
-       <!-- 각 사용자 스토리는 독립적으로 테스트 가능하고 가치를 전달해야 함 -->
-       
-       ### User Story 1 - [제목] (Priority: P1)
-       - 설명: [사용자 여정을 평문으로 기술]
-       - Why this priority: [우선순위 선정 이유]
-       - Independent Test: [독립적 테스트 방법 및 전달 가치]
-       - Acceptance Scenarios:
-         1. **Given** [초기 상태], **When** [동작], **Then** [결과]
-       
-       ### User Story 2 - [제목] (Priority: P2)
-       ... (필요한 만큼 추가)
-
-       ### Edge Cases (엣지 케이스)
-       - [경계 조건 또는 에러 시나리오 기술]
-
-       ## Requirements (필수)
-
-       ### Functional Requirements
-       - **FR-001**: 시스템은 반드시 [특정 능력]을 제공해야 함
-       - **FR-002**: ...
-       
-       ### Key Entities (데이터 모델 포함 시)
-       - **[엔티티 1]**: [표현하는 데이터 및 핵심 속성]
-
-       ## Success Criteria (필수)
-       
-       ### Measurable Outcomes (측정 가능한 지표)
-       - **SC-001**: [측정 가능한 지표, 예: 가입 완료까지 2분 이내]
-       - **SC-002**: ...
 
   5. [파일 저장 및 확인]
      - 작성된 내용을 `docs/spec-kit/01_spec.md`에 저장하세요.
      - **필수**: 저장 후 `ls -l docs/spec-kit/01_spec.md`를 실행하여 생성을 확인하세요.
 
-prompt: "GitHub Spec-Kit 템플릿을 준수하여 상세 명세서(Spec) 작성을 시작해 주세요."
+prompt: "spec_template.md를 먼저 읽고, 이를 준수하여 상세 명세서(Spec) 작성을 시작해 주세요."
