@@ -11,10 +11,11 @@ instructions: |
        반드시 준수하여 작성해야 합니다.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
 
-  ⚠️ 이 환경은 **Windows PowerShell**입니다. `if exist`, `if not exist`(CMD 문법), `cat`, `ls -l`, `ls -R`(리눅스 명령어)는 절대 사용하지 마세요.
-  파일 존재 확인 및 디렉토리 조회는 반드시 Python으로 하세요:
-  - `python -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
-  - `python -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*')]"`
+  [필수 규칙]
+  파일 읽기, 존재 확인, 디렉토리 조회는 운영체제에 관계없이 항상 Python을 사용하세요.
+  shell 내장 명령어(`if exist`, `cat`, `ls`, `mkdir -p` 등)는 사용하지 마세요.
+  - 파일 읽기: `python -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+  - 디렉토리 목록: `python -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*.md')]"`
 
   2. [사전 확인 및 파일 탐색]
      - 프로젝트 루트의 `docs/` 폴더에서 `01_PRD.md`, `02_SRS.md` 파일을 아래 Python 명령으로 확인하세요:

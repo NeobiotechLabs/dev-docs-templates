@@ -13,8 +13,9 @@ instructions: |
      - 태스크 ID 형식 (`T001`, `T002`, ...), 병렬 가능 여부 표시 (🔀/🔒), 완료 조건을 반드시 포함하세요.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
 
-  ⚠️ 이 환경은 **Windows PowerShell**입니다. `if exist`, `if not exist`, `cat`, `ls` 등 CMD/리눅스 명령어는 절대 사용하지 마세요.
-  파일 존재 확인 및 디렉토리 조회는 반드시 Python으로 하세요.
+  [필수 규칙]
+  파일 읽기, 존재 확인, 디렉토리 조회는 운영체제에 관계없이 항상 Python을 사용하세요.
+  shell 내장 명령어(`if exist`, `cat`, `ls`, `mkdir -p` 등)는 사용하지 마세요.
 
   2. [이행 계획 문서 확인]
      - 프로젝트 루트의 `docs/spec-kit/02_plan.md`, `docs/spec-kit/01_spec.md` 파일을 Python으로 읽으세요:

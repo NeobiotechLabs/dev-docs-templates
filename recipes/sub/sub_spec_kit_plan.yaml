@@ -11,8 +11,9 @@ instructions: |
        Implementation Approach, Complexity Tracking)를 반드시 준수하여 작성해야 합니다.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
 
-  ⚠️ 이 환경은 **Windows PowerShell**입니다. `if exist`, `if not exist`, `cat`, `ls` 등 CMD/리눅스 명령어는 절대 사용하지 마세요.
-  파일 존재 확인 및 디렉토리 조회는 반드시 Python으로 하세요.
+  [필수 규칙]
+  파일 읽기, 존재 확인, 디렉토리 조회는 운영체제에 관계없이 항상 Python을 사용하세요.
+  shell 내장 명령어(`if exist`, `cat`, `ls`, `mkdir -p` 등)는 사용하지 마세요.
 
   2. [이전 문서 탐색 및 확인]
      - 프로젝트 루트의 `docs/` 폴더에서 아래 파일들을 Python으로 확인하세요:

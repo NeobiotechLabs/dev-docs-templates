@@ -44,21 +44,16 @@ instructions: |
 
   ### [실행 순서]
 
-  ⚠️ [Windows 환경 필수 주의 사항 — 모든 shell 명령어에 적용]
-     - 이 환경은 **Windows PowerShell** 입니다. CMD 전용 문법은 절대 사용 금지입니다:
-       - 금지: `if exist <path>`, `if not exist <path>` (CMD 문법)
-       - 금지: `cat`, `ls -l`, `ls -R` 등 Linux 명령어
-     - 파일 존재 확인은 반드시 Python으로 하세요:
-       `python -c "import os; print(os.path.exists('<path>'))"` 또는
-       `python -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else '')"`
-     - 디렉토리 목록은 Python으로 하세요:
-       `python -c "import os; [print(f) for f in os.listdir('<dir>')]"` 또는
-       `python -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*')]"` 
+  [필수 규칙 — 모든 shell 명령어에 적용]
+     - 파일 읽기, 존재 확인, 디렉토리 목록 조회는 운영체제에 관계없이 항상 Python을 사용하세요.
+       파일 읽기: `python -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+       디렉토리 목록: `python -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*')]"` 
+     - shell 내장 명령어(`if exist`, `cat`, `ls`, `mkdir -p` 등)는 플랫폼 호환성 문제가 있으므로 사용하지 마세요.
 
   1. [컨텍스트 로드]
-     - Windows 환경의 인코딩 문제(한글 깨짐)를 방지하기 위해 **반드시** 아래와 같이 Python으로 읽으세요:
+     - 인코딩 문제(한글 깨짐)를 방지하기 위해 반드시 아래와 같이 Python으로 읽으세요:
        `python -c "import json; ctx=json.load(open('context.json', encoding='utf-8')); print(json.dumps(ctx, ensure_ascii=False, indent=2))"`
-     - ⚠️ 절대로 `cat context.json` 이나 파일 읽기용 `code_execution` (Goose built-in 외)을 사용하지 마십시오.
+     - 절대로 `cat context.json` 이나 파일 읽기용 `code_execution` (Goose built-in 외)을 사용하지 마십시오.
      - 다음 필드를 반드시 확인하세요:
        - `ticket_id`, `summary`, `description`, `command`, `command_args`
        - **`issue_type`** — 티켓 유형 판단의 핵심 필드 (예: "Epic", "Story", "Task", "Bug")
@@ -87,20 +82,20 @@ instructions: |
 
      판단한 카테고리에 따라 아래 5~7단계의 실행 경로를 선택합니다.
 
-  5. [★ Bug/Hotfix 경로 — 최소 생성]
+  5. [Bug/Hotfix 경로 -- 최소 생성]
      - **카테고리가 `bug`인 경우만 이 단계를 실행합니다.**
      - `sub_spec_kit_spec` 서브레시피만 실행하여 `docs/spec-kit/01_spec.md`를 생성하세요.
      - `docs/spec-kit/02_plan.md`, `03_tasks.md`는 생성하지 않습니다.
      - 전역 문서(`01_PRD.md`, `02_SRS.md` 등)는 절대 수정하지 않습니다.
      - **이 단계 완료 후 8단계(요약)로 바로 이동하세요.**
 
-  6. [★ Task/Sub-task 경로 — Spec-Kit 3종만 생성]
+  6. [Task/Sub-task 경로 -- Spec-Kit 3종만 생성]
      - **카테고리가 `task`인 경우만 이 단계를 실행합니다.**
      - `sub_spec_kit_spec`, `sub_spec_kit_plan`, `sub_spec_kit_tasks` 순서로 실행하세요.
      - 전역 문서(`01_PRD.md`, `02_SRS.md` 등)는 절대 수정하지 않습니다.
      - **이 단계 완료 후 8단계(요약)로 바로 이동하세요.**
 
-  7. [★ Epic/Story 경로 — 글로벌 문서 영향 판단 후 결정]
+  7. [Epic/Story 경로 -- 글로벌 문서 영향 판단 후 결정]
      - **카테고리가 `epic` 또는 `story`인 경우만 이 단계를 실행합니다.**
 
      7-A. [2단계 Depth 판단 — 전역 문서 영향 여부 분석]
@@ -136,7 +131,7 @@ instructions: |
        - 요약에는 "티켓 유형", "생성된 산출물 목록", "전역 문서 갱신 여부"를 반드시 포함하세요.
      - `sub_context_compaction`을 수행하여 `session_context.md`에 이번 기획 방향을 짧게 갱신/압축하세요.
      - 아래 git 명령을 실행하세요:
-       `git add docs/ .goosehints && git commit -m "[{ticket_id}] !plan — 기획 문서 생성 ({issue_type})" && git push -u origin HEAD`
+       `git add docs/ .goosehints && git commit -m "[{ticket_id}] !plan -- 기획 문서 생성 ({issue_type})" && git push -u origin HEAD`
 
   9. [질문 게시]
      - 만약 진행에 필요한 핵심 정보가 부족하다면, 임의로 지어내지 말고 `.agents/skills/jira-commenter/SKILL.md`를 참조하여 질문 댓글을 게시한 후 세션을 종료하세요.
