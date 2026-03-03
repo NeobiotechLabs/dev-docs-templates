@@ -89,9 +89,21 @@ instructions: |
      - 전역 문서(`01_PRD.md`, `02_SRS.md` 등)는 절대 수정하지 않습니다.
      - **이 단계 완료 후 8단계(요약)로 바로 이동하세요.**
 
-  6. [Task/Sub-task 경로 -- Spec-Kit 3종만 생성]
+  6. [Task/Sub-task 경로 -- Spec-Kit 3종 생성 또는 갱신]
      - **카테고리가 `task`인 경우만 이 단계를 실행합니다.**
-     - `sub_spec_kit_spec`, `sub_spec_kit_plan`, `sub_spec_kit_tasks` 순서로 실행하세요.
+
+     6-A. [spec-kit 기존 파일 유무 판단 및 신규 요구사항 비교 -- 반드시 실행]
+       - `docs/spec-kit/01_spec.md`이 존재하면 Python으로 챜 3000자을 읽으세요:
+         `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print(p.read_text(encoding='utf-8')[:3000] if p.exists() else 'NOT_FOUND')"`
+       - 읽은 내용과 `command_args`를 비교하여 아래 중 하나라도 해당하면 **갱신 필요**로 판단하세요:
+         * `command_args`에 언급된 기능이 현재 spec에 없거나 서술이 전혀 다릅니다
+         * `command_args`가 새로운 시나리오, 엄거조건, 동작 법칙을 요청합니다
+       - **파일이 존재한다고 해서 `command_args`의 신규 요구사항을 묵시하면 안 됩니다. 이메일 `!plan`은 새 요청이므로 반드시 반영 여부를 판단하세요.**
+
+     6-B. [sub 레시피 실행]
+       - `sub_spec_kit_spec` (신규 작성 또는 `command_args` 반영 갱신)
+       - `sub_spec_kit_plan` (신규 작성 또는 spec 변경 사항 반영 갱신)
+       - `sub_spec_kit_tasks` (신규 작성 또는 plan 변경 사항 반영 갱신)
      - 전역 문서(`01_PRD.md`, `02_SRS.md` 등)는 절대 수정하지 않습니다.
      - **이 단계 완료 후 8단계(요약)로 바로 이동하세요.**
 

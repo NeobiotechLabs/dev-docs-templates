@@ -17,16 +17,22 @@ instructions: |
   - 파일 읽기: `python -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
   - 디렉토리 목록: `python -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*.md')]"`
 
-  2. [사전 확인 및 파일 탐색]
-     - 프로젝트 루트의 `docs/` 폴더에서 `01_PRD.md`, `02_SRS.md` 파일을 아래 Python 명령으로 확인하세요:
+  2. [사전 확인 -- 기존 spec과 command_args 비교]
+     - `context.json`에서 `command_args` 필드를 확인하세요. 이것이 이번 !plan의 핵심 요청입니다.
+     - `docs/spec-kit/01_spec.md`가 존재하면 Python으로 읽으세요:
+       `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+     - 읽은 내용과 `command_args`를 비교하여 **갱신 필요 여부를 명시적으로 판단**하세요:
+       * command_args에 언급된 기능/동작/시나리오가 현재 spec에 없거나 다르게 서술된 경우 -> **갱신 필요**
+       * command_args의 내용이 이미 spec에 완전히 반영된 경우 -> 갱신 불필요
+     - **중요**: 파일이 존재한다는 사실만으로 갱신 불필요 결정을 내리면 안 됩니다. `!plan` 명령은 항상 새 요청이며, command_args의 내용이 spec에 반영되었는지 반드시 내용을 비교해야 합니다.
+     - `docs/01_PRD.md`, `docs/02_SRS.md`도 Python으로 확인하세요 (있으면):
        `python -c "import pathlib; p=pathlib.Path('docs/01_PRD.md'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
-     - `context.json`에서 ticket_id, summary, description, issue_type 필드를 확인하세요.
-     - 없다면 `python -c "import pathlib; [print(p) for p in pathlib.Path('docs').rglob('*.md')]"` 으로 정확한 위치를 먼저 찾으세요.
 
   3. [입력 문서 분석]
      - 찾아낸 PRD/SRS 내용을 상세히 읽어 비즈니스 목표와 기술적 요구사항을 파악하세요.
+     - **갱신 필요로 판단된 경우**: command_args의 모든 신규 기능을 User Story로 추가하거나 기존 내용을 수정하세요.
 
-  4. [Spec 작성]
+  4. [Spec 작성 또는 갱신]
      - 로드한 `spec_template.md` 형식을 엄격히 준수하여 `docs/spec-kit/01_spec.md`를 작성하세요.
      - 사용자 스토리는 각각 **독립적으로 테스트 가능**해야 하며, 우선순위(P1, P2, P3)가 지정되어야 합니다.
      - 요구사항(FR-XXX)은 명확해야 하며, 모호한 경우 [NEEDS CLARIFICATION] 표시를 하세요.
@@ -35,4 +41,4 @@ instructions: |
      - 작성된 내용을 `docs/spec-kit/01_spec.md`에 저장하세요.
      - **필수**: 저장 후 `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print('OK:', p.stat().st_size, 'bytes') if p.exists() else print('ERROR: 파일 없음')"` 으로 생성을 확인하세요.
 
-prompt: "spec_template.md를 먼저 읽고, 이를 준수하여 상세 명세서(Spec) 작성을 시작해 주세요."
+prompt: "context.json의 command_args를 먼저 확인하고, 기존 spec-kit/01_spec.md가 있다면 내용을 비교하여 신규 요청이 반영되었는지 판단한 후 명세서를 작성하거나 갱신하세요."
