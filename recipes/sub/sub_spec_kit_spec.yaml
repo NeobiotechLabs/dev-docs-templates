@@ -11,10 +11,16 @@ instructions: |
        반드시 준수하여 작성해야 합니다.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
 
+  ⚠️ 이 환경은 **Windows PowerShell**입니다. `if exist`, `if not exist`(CMD 문법), `cat`, `ls -l`, `ls -R`(리눅스 명령어)는 절대 사용하지 마세요.
+  파일 존재 확인 및 디렉토리 조회는 반드시 Python으로 하세요:
+  - `python -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+  - `python -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*')]"`
+
   2. [사전 확인 및 파일 탐색]
-     - 프로젝트 루트의 `docs/` 폴더에서 `01_PRD.md`, `02_SRS.md` 파일이 존재하는지 확인하세요.
+     - 프로젝트 루트의 `docs/` 폴더에서 `01_PRD.md`, `02_SRS.md` 파일을 아래 Python 명령으로 확인하세요:
+       `python -c "import pathlib; p=pathlib.Path('docs/01_PRD.md'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
      - `context.json`에서 ticket_id, summary, description, issue_type 필드를 확인하세요.
-     - 없다면 `ls -R docs/` 등을 통해 정확한 위치를 먼저 찾으세요.
+     - 없다면 `python -c "import pathlib; [print(p) for p in pathlib.Path('docs').rglob('*.md')]"` 으로 정확한 위치를 먼저 찾으세요.
 
   3. [입력 문서 분석]
      - 찾아낸 PRD/SRS 내용을 상세히 읽어 비즈니스 목표와 기술적 요구사항을 파악하세요.
@@ -26,6 +32,6 @@ instructions: |
 
   5. [파일 저장 및 확인]
      - 작성된 내용을 `docs/spec-kit/01_spec.md`에 저장하세요.
-     - **필수**: 저장 후 `ls -l docs/spec-kit/01_spec.md`를 실행하여 생성을 확인하세요.
+     - **필수**: 저장 후 `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print('OK:', p.stat().st_size, 'bytes') if p.exists() else print('ERROR: 파일 없음')"` 으로 생성을 확인하세요.
 
 prompt: "spec_template.md를 먼저 읽고, 이를 준수하여 상세 명세서(Spec) 작성을 시작해 주세요."

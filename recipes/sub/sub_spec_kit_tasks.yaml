@@ -13,9 +13,13 @@ instructions: |
      - 태스크 ID 형식 (`T001`, `T002`, ...), 병렬 가능 여부 표시 (🔀/🔒), 완료 조건을 반드시 포함하세요.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
 
+  ⚠️ 이 환경은 **Windows PowerShell**입니다. `if exist`, `if not exist`, `cat`, `ls` 등 CMD/리눅스 명령어는 절대 사용하지 마세요.
+  파일 존재 확인 및 디렉토리 조회는 반드시 Python으로 하세요.
+
   2. [이행 계획 문서 확인]
-     - 프로젝트 루트의 `docs/spec-kit/02_plan.md` 파일이 존재하는지 확인하고 내용을 읽으세요.
-     - `docs/spec-kit/01_spec.md`도 함께 읽어 사용자 스토리와 요구사항을 참조하세요.
+     - 프로젝트 루트의 `docs/spec-kit/02_plan.md`, `docs/spec-kit/01_spec.md` 파일을 Python으로 읽으세요:
+       `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/02_plan.md'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+       `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
 
   3. [의존성 분석]
      - 구현 계획의 단계별 의존성을 파악하고 선행되어야 할 공통 인프라(Setup, Foundational)를 식별하세요.
@@ -28,6 +32,6 @@ instructions: |
 
   5. [파일 저장 및 확인]
      - 작성된 내용을 `docs/spec-kit/03_tasks.md`에 저장하세요.
-     - **필수**: 저장 후 `ls -l docs/spec-kit/03_tasks.md`를 실행하여 생성을 확인하세요.
+     - **필수**: 저장 후 `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/03_tasks.md'); print('OK:', p.stat().st_size, 'bytes') if p.exists() else print('ERROR: 파일 없음')"` 으로 생성을 확인하세요.
 
 prompt: "tasks_template.md를 먼저 읽고, 이를 준수하여 세밀한 마이크로 태스크(Tasks) 분할을 시작해 주세요."

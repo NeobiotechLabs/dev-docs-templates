@@ -11,12 +11,13 @@ instructions: |
        Implementation Approach, Complexity Tracking)를 반드시 준수하여 작성해야 합니다.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
 
+  ⚠️ 이 환경은 **Windows PowerShell**입니다. `if exist`, `if not exist`, `cat`, `ls` 등 CMD/리눅스 명령어는 절대 사용하지 마세요.
+  파일 존재 확인 및 디렉토리 조회는 반드시 Python으로 하세요.
+
   2. [이전 문서 탐색 및 확인]
-     - 프로젝트 루트의 `docs/` 폴더에서 아래 파일들을 찾아 내용을 파악하세요:
-       * `docs/03_Architecture.md` (있으면 참고)
-       * `docs/04_Detailed_Design.md` (있으면 참고)
-       * `docs/spec-kit/01_spec.md` (참고용, 필수)
-     - 파일이 보이지 않는다면 `ls -R docs/` 명령으로 위치를 확인하세요.
+     - 프로젝트 루트의 `docs/` 폴더에서 아래 파일들을 Python으로 확인하세요:
+       `python -c "import pathlib; [print(p.name, ':', p.stat().st_size if p.exists() else 'NOT_FOUND') for p in [pathlib.Path('docs/03_Architecture.md'), pathlib.Path('docs/04_Detailed_Design.md'), pathlib.Path('docs/spec-kit/01_spec.md')]]"`
+     - 파일이 보이지 않는다면 `python -c "import pathlib; [print(p) for p in pathlib.Path('docs').rglob('*.md')]"` 명령으로 위치를 확인하세요.
 
   3. [Plan 작성]
      - 로드한 `plan_template.md` 형식을 엄격히 준수하여 `docs/spec-kit/02_plan.md`를 작성하세요.
@@ -25,6 +26,6 @@ instructions: |
 
   4. [파일 저장 및 확인]
      - 작성된 내용을 `docs/spec-kit/02_plan.md`에 저장하세요.
-     - **필수**: 저장 후 `ls -l docs/spec-kit/02_plan.md`를 실행하여 생성을 확인하세요.
+     - **필수**: 저장 후 `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/02_plan.md'); print('OK:', p.stat().st_size, 'bytes') if p.exists() else print('ERROR: 파일 없음')"` 으로 생성을 확인하세요.
 
 prompt: "plan_template.md를 먼저 읽고, 이를 준수하여 기술 이행 계획(Plan) 작성을 시작해 주세요."

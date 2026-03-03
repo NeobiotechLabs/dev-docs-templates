@@ -44,6 +44,17 @@ instructions: |
 
   ### [실행 순서]
 
+  ⚠️ [Windows 환경 필수 주의 사항 — 모든 shell 명령어에 적용]
+     - 이 환경은 **Windows PowerShell** 입니다. CMD 전용 문법은 절대 사용 금지입니다:
+       - 금지: `if exist <path>`, `if not exist <path>` (CMD 문법)
+       - 금지: `cat`, `ls -l`, `ls -R` 등 Linux 명령어
+     - 파일 존재 확인은 반드시 Python으로 하세요:
+       `python -c "import os; print(os.path.exists('<path>'))"` 또는
+       `python -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else '')"`
+     - 디렉토리 목록은 Python으로 하세요:
+       `python -c "import os; [print(f) for f in os.listdir('<dir>')]"` 또는
+       `python -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*')]"` 
+
   1. [컨텍스트 로드]
      - Windows 환경의 인코딩 문제(한글 깨짐)를 방지하기 위해 **반드시** 아래와 같이 Python으로 읽으세요:
        `python -c "import json; ctx=json.load(open('context.json', encoding='utf-8')); print(json.dumps(ctx, ensure_ascii=False, indent=2))"`
@@ -55,10 +66,12 @@ instructions: |
      - `docs/progress/session_context.md` 가 존재한다면 **반드시 읽어** 기존 컨텍스트 맥락을 파악하세요.
 
   2. [작업 공간 초기화]
-     - `mkdir -p docs/spec-kit` 를 실행하세요.
+     - `python -c "import pathlib; pathlib.Path('docs/spec-kit').mkdir(parents=True, exist_ok=True); print('docs/spec-kit ready')"`
 
   3. [전역 지도(.goosehints) 확인]
-     - 프로젝트 루트에 `.goosehints` 파일이 없거나 부실하면, 디렉토리 구조를 스캔하여 `.goosehints` 파일을 생성/갱신하세요.
+     - 아래 Python 명령으로 `.goosehints` 파일의 존재 여부와 내용을 확인하세요:
+       `python -c "import pathlib; p=pathlib.Path('.goosehints'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+     - 출력이 `NOT_FOUND` 이거나 내용이 부실하면, 디렉토리 구조를 스캔하여 `.goosehints` 파일을 생성/갱신하세요.
 
   4. [티켓 유형(issue_type) 분류 — Task 7.3 핵심]
 
