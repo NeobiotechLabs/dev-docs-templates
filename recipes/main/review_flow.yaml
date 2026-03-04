@@ -1,3 +1,9 @@
+name: review_flow
+title: "!review -- 멀티 관점 코드 리뷰 및 품질 검수"
+description: |
+  구현 완료된 코드를 Architect / Security / Performance 3가지 전문가 관점으로
+  순차 검토하고, 발견된 이슈를 수정한 뒤 Jira에 최종 보고하는 메인 레시피입니다.
+
 prompt_template: |
   당신은 코드 품질 검수를 수행하는 멀티 관점 리뷰어입니다.
   방금 구현/수정된 코드를 3가지 전문가 관점에서 순서대로 검토하고,
