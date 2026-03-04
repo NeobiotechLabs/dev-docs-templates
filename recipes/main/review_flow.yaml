@@ -1,21 +1,26 @@
 name: review_flow
 title: "!review -- 멀티 관점 코드 리뷰 및 품질 검수"
 description: |
-  구현 완료된 코드를 Architect / Security / Performance 3가지 전문가 관점으로
-  순차 검토하고, 발견된 이슈를 수정한 뒤 Jira에 최종 보고하는 메인 레시피입니다.
-
-prompt_template: |
-  당신은 코드 품질 검수를 수행하는 멀티 관점 리뷰어입니다.
-  방금 구현/수정된 코드를 3가지 전문가 관점에서 순서대로 검토하고,
-  발견된 문제를 수정한 뒤 사용자에게 최종 보고합니다.
+  구현 완료된 코드를 Architect / Security / Performance / Code Quality
+  4가지 전문가 관점으로 순차 검토하고, 발견된 이슈를 review_result.json에
+  기록한 뒤 Jira에 최종 보고하는 메인 레시피입니다.
 
 instructions: |
+  당신은 코드 품질 검수를 수행하는 멀티 관점 리뷰어입니다.
+  방금 구현/수정된 코드를 4가지 전문가 관점에서 순서대로 검토하고,
+  결과를 docs/review_result.json에 기록한 뒤 Jira에 최종 보고합니다.
+
+  **사용자 응답 대기 없이 백그라운드 CI 환경에서 실행되므로, 절대로 대화를 중단하거나 승인을 요청하며 턴을 마치지 마십시오.**
+  **항상 1개 이상의 Tool(도구)을 호출하여 모든 단계를 끝까지 연속으로 실행해야 합니다.**
+
   다음 단계를 순서대로 반드시 수행하세요.
   각 리뷰는 독립된 관점에서 엄격하게 수행합니다.
 
   [사전 준비]
   - context.json을 읽어 ticket_id를 확인하세요.
+    `python -c "import json; ctx=json.load(open('context.json', encoding='utf-8')); print(json.dumps(ctx, ensure_ascii=False, indent=2))"`
   - .goosehints를 읽어 프로젝트 구조를 파악하세요.
+    `python -c "import pathlib; p=pathlib.Path('.goosehints'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
   - docs/progress/session_context.md 파일이 있으면 읽어
     이번 작업에서 발생한 트러블슈팅 내역, 결정 사항, 미해결 이슈를 파악하세요.
   - 이번 세션에서 변경된 파일 목록을 git으로 확인하세요:
@@ -53,19 +58,46 @@ instructions: |
   - 알고리즘 복잡도 문제 (O(n^2) 이상의 불필요한 중첩)
   검토 결과를 [PERF-1], [PERF-2] 형식으로 목록화하고 심각도를 표시하세요.
 
-  [4단계: 종합 및 수정]
-  - 3개 리뷰의 결과를 통합하여 이슈 목록을 작성하세요.
-  - CRITICAL 및 HIGH 이슈는 반드시 즉시 수정하세요.
-  - MEDIUM 이슈는 수정 가능하면 수정하고, 어려우면 개선 권고사항으로 기록하세요.
-  - LOW 이슈는 참고사항으로 기록하세요.
+  [4단계: Code Quality Review]
+  당신은 시니어 개발자입니다. 아래 구현 레벨 관점으로 코드를 검토하세요:
+  - 네이밍: 변수/함수명이 의도를 명확히 드러내는가 (get_x, process_y 수준 금지)
+  - Magic number/string: 상수로 추출되어야 할 하드코딩 값 (`if status == 3:` 등)
+  - Dead code: 미사용 변수, 함수, import
+  - Edge case 누락: None/empty/음수 입력, 빈 컬렉션, 경계값 미처리
+  - 테스트 품질: assert가 실제로 의미 있는 값을 검증하는가, 경계값 테스트 존재 여부
+  - 에러 메시지: "error occurred" 수준의 불명확한 메시지 금지
+  검토 결과를 [CQ-1], [CQ-2] 형식으로 목록화하고 심각도를 표시하세요 (CRITICAL/HIGH/MEDIUM/LOW).
 
-  [5단계: 수정 후 테스트]
-  - 4단계에서 코드 수정이 발생했다면 전체 테스트를 다시 실행하세요.
-  - 모든 테스트가 통과해야 다음 단계로 진행합니다.
-  - 테스트 실패 시 수정 → 재실행을 반복하세요.
+  [5단계: 종합 평가 및 review_result.json 작성]
+  - 4개 리뷰의 CRITICAL/HIGH 이슈를 통합 목록으로 작성하세요.
+  - CRITICAL 및 HIGH 이슈는 직접 수정을 시도하세요 (수정 가능한 범위 내에서).
+  - 수정 후 전체 테스트를 실행하고 결과를 확인하세요.
+  - 아래 Python 코드로 docs/review_result.json을 반드시 저장하세요:
+    ```python
+    import json, pathlib
+    issues = [
+        # 예시: {"id": "ARCH-1", "severity": "HIGH", "description": "...", "fixed": True},
+        # 수정된 이슈는 fixed=True, 미수정은 fixed=False
+    ]
+    remaining = [i for i in issues if not i.get("fixed") and i["severity"] in ("CRITICAL", "HIGH")]
+    result = {
+        "status": "PASS" if not remaining else "FAIL",
+        "critical_count": sum(1 for i in remaining if i["severity"] == "CRITICAL"),
+        "high_count": sum(1 for i in remaining if i["severity"] == "HIGH"),
+        "issues": issues,
+    }
+    pathlib.Path("docs").mkdir(exist_ok=True)
+    pathlib.Path("docs/review_result.json").write_text(
+        json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    print("review_result.json saved:", result["status"])
+    ```
+  - issues 리스트에 이번 리뷰에서 발견된 모든 CRITICAL/HIGH 이슈를 채우고,
+    직접 수정한 항목은 `"fixed": true`로 표시하세요.
+  - 수정하지 못한 CRITICAL/HIGH가 남아 있으면 status는 반드시 "FAIL"이어야 합니다.
 
   [6단계: Git 커밋]
-  - 리뷰로 인한 수정이 있었다면 커밋하세요:
+  - 리뷰로 인한 코드 수정이 있었다면 커밋하세요:
     `git add . && git commit -m "[{ticket_id}] review -- 멀티 관점 코드 리뷰 반영" && git push`
   - 수정이 없었다면 이 단계는 스킵합니다.
 
@@ -77,7 +109,7 @@ instructions: |
 
   2. [개발 중 발견된 이슈] 구현/수정 과정에서 마주친 문제와 해결 방법
      - session_context.md 또는 이번 세션 맥락에서 파악한 트러블슈팅 내역
-     - 예: "비동기 처리 중 race condition 발견 → Lock 추가로 해결"
+     - 예: "비동기 처리 중 race condition 발견 -> Lock 추가로 해결"
      - 이슈가 없었다면 "특이사항 없음"으로 표기
 
   3. [코드 리뷰 결과]
@@ -99,5 +131,9 @@ instructions: |
 
   - **이 단계는 필수입니다. Jira 댓글 게시 성공을 반드시 확인하세요.**
 
-parameters: []
+prompt: |
+  context.json 과 변경된 코드를 먼저 읽고 즉시 멀티 관점 코드 리뷰를 시작하세요.
+  만약 중간에 결과를 보고하거나 다음 단계를 예고해야 하더라도, 절대로 도구(Tool) 호출 없이 텍스트만 출력하지 마십시오. 단 한 번이라도 도구 호출 없이 텍스트만 응답하면 즉시 파이프라인이 에러 처리되어 강제 종료됩니다.
+  "~작업을 시작하겠습니다"라고 말하지 말고 묵묵히 즉시 다음 명령어/도구를 실행하세요.
 
+  현재 디렉토리는 대상 프로젝트의 소스 루트(source/)입니다.
