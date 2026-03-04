@@ -60,13 +60,19 @@ instructions: |
      - `README.md`를 포함한 결과물이 `01_spec.md`의 목표와 일치하는지 확인하세요.
 
   6. [구현 요약 -- 필수 완료 후 종료]
-     - 이번 구현 작업에서 **작성/수정된 코드 및 파일 내역**을 한글로 요약하여 `docs/summary.md` 파일을 **반드시 새로 작성(덮어쓰기)** 하세요.
+     - 이번 구현 작업에서 **작성/수정된 코드 및 파일 내역**을 한글로 요약하여
+       .agents/skills/jira-commenter/SKILL.md를 참조해 Jira에 직접 완료 댓글을 게시하세요.
        요약에는 아래를 반드시 포함하세요:
-       - 구현된 헥심 기능 목록 (태스크 ID 기준)
+       - 구현된 핵심 기능 목록 (태스크 ID 기준)
        - 새로 생성된 파일과 주요 수정 코드
        - 테스트 결과 (성공/실패 여부)
        - 발생한 트러블 및 해결책
-     - **`docs/summary.md` 작성은 선택이 아니라 필수입니다. 이 파일이 없으면 Jira 댓글에 요약이 표시되지 않습니다.**
+     예시:
+       python .agents/skills/jira-commenter/scripts/post_comment.py \
+         --type done \
+         --ticket {ticket_id} \
+         --summary "[!implement 완료] Task 1~5 구현. 생성 파일: src/api/route.py, test/test_route.py. 테스트 전체 통과."
+     - **이 단계는 선택이 아니라 필수입니다. Jira 신규 댓글 게시가 성공해야 크로스체크하세요.**
      - `sub_context_compaction`을 수행하여 `session_context.md`에 이번 구현 내역과 트러블슈팅/해결 사항을 갱신 및 기존 내용을 압축하세요.
 
   7. [전역 지도(.goosehints) 갱신]
@@ -78,9 +84,7 @@ instructions: |
      - push 완료 후 아래 Python 명령으로 commit ID를 확인하세요:
        `python -c "import subprocess; r=subprocess.run(['git','rev-parse','--short','HEAD'],capture_output=True,text=True); print('Commit ID:', r.stdout.strip())"`
 
-  9. [완료 보고]
-     - 구현 완료 요약을 출력하고 종료합니다.
-     - (Phase 4 연동 후) Jira 댓글로 결과를 보고합니다.
+
 
 prompt: |
   context.json 과 docs/spec-kit/ 문서를 먼저 읽고 즉시 구현을 시작하세요.
