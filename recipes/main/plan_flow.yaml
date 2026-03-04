@@ -139,17 +139,38 @@ instructions: |
        - `sub_spec_kit_spec`, `sub_spec_kit_plan`, `sub_spec_kit_tasks` 순서로 실행하세요.
 
   8. [작업 요약 -- 필수 완료 후 종료]
-     - 이번 기획 작업에서 변경된 핵심 내용을 한글로 요약하여 .agents/skills/jira-commenter/SKILL.md를 참조해 Jira에 직접 완료 댓글을 게시하세요.
-       요약에는 아래를 반드시 포함하세요:
-       - 티켓 유형 및 선택된 실행 경로 (bug/task/epic 등)
-       - 생성된 산출물 목록 (어떤 파일이 만들어졌는지)
-       - 전역 문서 갱신 여부
-     예시:
+     이번 기획 작업의 핵심 내용을 아래 두 가지 방식으로 반드시 보고하세요.
+
+     [8-A] docs/summary.md 파일 작성 (필수 -- 가장 먼저 수행)
+     Python으로 아래 형식의 내용을 `docs/summary.md`에 저장하세요:
+     ```python
+     import pathlib
+     content = """## {ticket_id} !plan 작업 요약
+
+     ### 실행 경로
+     - 티켓 유형: {issue_type}
+     - 선택된 경로: (bug/task/epic 중)
+
+     ### 생성된 산출물
+     - docs/spec-kit/01_spec.md
+     - docs/spec-kit/02_plan.md  (해당 시)
+     - docs/spec-kit/03_tasks.md (해당 시)
+
+     ### 전역 문서 갱신
+     - (갱신 여부 및 대상 파일)
+     """
+     pathlib.Path("docs/summary.md").write_text(content, encoding="utf-8")
+     ```
+     실제 내용으로 채워서 저장하세요. 이 파일은 Runner가 Jira 댓글로 자동 게시합니다.
+
+     [8-B] Jira 직접 게시 시도 (추가 -- 8-A 이후 수행)
+     .agents/skills/jira-commenter/SKILL.md를 참조하여 Jira에도 직접 댓글을 게시하세요:
        python .agents/skills/jira-commenter/scripts/post_comment.py \
          --type done \
          --ticket {ticket_id} \
-         --summary "[!plan 완료] spec-kit 3종 생성. 생성 파일: 01_spec.md, 02_plan.md, 03_tasks.md. 전역 문서 업데이트 없음."
-     - **이 단계는 선택이 아니라 필수입니다. Jira 신규 댓글 게시가 성공해야 크로스체크하세요.**
+         --summary "[!plan 완료] 티켓유형: {issue_type}, 생성파일: 01_spec.md/02_plan.md/03_tasks.md, 전역문서: (갱신여부)"
+
+     - **8-A(파일 작성)는 절대 생략 불가입니다. 8-B 실패 시에도 8-A로 보고됩니다.**
      - `sub_context_compaction`을 수행하여 `session_context.md`에 이번 기획 방향을 짧게 갱신/압축하세요.
      - git commit 및 push를 실행하세요:
        `git add docs/ .goosehints && git commit -m "[{ticket_id}] !plan -- 기획 문서 생성 ({issue_type})" && git push -u origin HEAD`
