@@ -1,5 +1,31 @@
 # Risk Management Plan
 
+<!-- AI AGENT 작성 지침
+이 문서는 ISO 14971:2019 기반 위험 관리 계획서입니다. PA 단계에서 작성하는 핵심 산출물입니다.
+
+작성 전 반드시 다음 문서를 참조하세요:
+  - 사용 목적 정의서(intended-use.md): 의도된 사용자, 사용 환경, 의료 목적 확인
+
+작성 지침:
+1. 제품명과 버전을 문서 상단에 명시하세요
+2. 1.2.1 사용량 추정은 실제 제품의 예상 사용자 수와 수명을 기반으로 작성하세요
+   - 예: 제품 수명 3년, 일일 100회 사용 -> 총 109,575회 사용
+3. 1.2.2 중증도 등급(S1~S4)은 실제 제품에서 발생 가능한 위해 예시로 변경하세요
+   - 진단 보조 SW의 경우: 오진으로 인한 불필요한 시술, 치료 지연 등
+4. 1.2.3 확률 등급(P1~P5)의 "Estimated Maximum Event Count"를 실제 사용량 계산 결과로 업데이트하세요
+5. 1.2.4 위험 허용 매트릭스는 제품의 의료적 이득-위험 균형을 반영하여 결정하세요
+6. 담당자(Roles) 섹션에 실제 담당자 이름과 역할을 기재하세요
+
+위험 관리 계획서 완성 체크리스트:
+  [ ] 제품명/버전 명시
+  [ ] 위험 관리자(Risk Manager) 지정
+  [ ] 사용량 추정 수치 입력
+  [ ] 중증도 정의가 제품 특성에 맞게 수정됨
+  [ ] 위험 허용 매트릭스 경영진 승인 완료
+  [ ] SOP Integrated Software Development 참조 확인
+-->
+
+
 The Risk Management Plan contains the risk policy and defines the criteria for risk acceptance. It also
 references relevant processes and activities which will be conducted for product-specific risk management as
 part of the integrated software development process (SOP Integrated Software Development).
@@ -7,7 +33,7 @@ part of the integrated software development process (SOP Integrated Software Dev
 ## Mapping of Standard Requirements to Document Sections
 
 | ISO 14971:2019 Section | Document Section                                |
-|------------------------|-------------------------------------------------|
+| ---------------------- | ----------------------------------------------- |
 | 4.1                    | 1                                               |
 | 4.2                    | 1.2, 3                                          |
 | 4.3                    | (Records of competence are kept as Part of QMS) |
@@ -68,12 +94,12 @@ technology and medicine, and the availability of alternative medical devices or 
 
 > Define estimates for how much you think your device is going to be used in the market.
 
-| Usage               | Values                                                                                                             |
-|---------------------|--------------------------------------------------------------------------------------------------------------------|
-| Product life span   | Enter number of years you expect the device to be in the market (from design conceptualization to decommissioning) |
-| Users               | Enter number of estimated users here                                                                               |
-| Usages / user       | Enter number of estimated times the device is used per user                                                        |
-| Total usages        | Do the math!                                                                                                       |
+| Usage             | Values                                                                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Product life span | Enter number of years you expect the device to be in the market (from design conceptualization to decommissioning) |
+| Users             | Enter number of estimated users here                                                                               |
+| Usages / user     | Enter number of estimated times the device is used per user                                                        |
+| Total usages      | Do the math!                                                                                                       |
 
 The software's lifetime is established to be [for example: three years]. This is what is expected to be the
 maximum time until the implementation of a significant change, by which the manufacturer is able to react to
@@ -92,7 +118,7 @@ a timely manner.
 > harms in your product.
 
 | Severity         | Definition and Examples                                                                                   |
-|------------------|-----------------------------------------------------------------------------------------------------------|
+| ---------------- | --------------------------------------------------------------------------------------------------------- |
 | S1: Negligible   | Minor, reversible damage, e.g. superficial skin irritation, delay of non-critical treatment               |
 | S2: Marginal     | Minor, reversible damage with required medical intervention, e.g. skin laceration requiring stitches      |
 | S3: Critical     | Major, irreversible damage with required medical intervention, e.g. irreversible deterioration of disease |
@@ -111,7 +137,7 @@ a timely manner.
 > e.g. you want to know "how often can probability P3 occur if the product is being used 100 times per day?"
 
 | Probability     | Upper Limit | Lower Limit | Estimated Maximum Event Count |
-|-----------------|-------------|-------------|-------------------------------|
+| --------------- | ----------- | ----------- | ----------------------------- |
 | P5: Certain     | 1           | 10^-2       | 1000000 *(change this*)       |
 | P4: Likely      | 10^-2       | 10^-4       | 10000                         |
 | P3: Unlikely    | 10^-4       | 10^-6       | 100                           |
@@ -128,7 +154,7 @@ a timely manner.
 > hope.
 
 | Probability     | S1: Negligible | S2: Marginal     | S3: Critical     | S4: Catastrophic | Estimated Maximum Event Count |
-|-----------------|----------------|------------------|------------------|------------------|-------------------------------|
+| --------------- | -------------- | ---------------- | ---------------- | ---------------- | ----------------------------- |
 | P5: Certain     | acceptable     | **unacceptable** | **unacceptable** | **unacceptable** | 1000000                       |
 | P4: Likely      | acceptable     | **unacceptable** | **unacceptable** | **unacceptable** | 10000                         |
 | P3: Unlikely    | acceptable     | acceptable       | **unacceptable** | **unacceptable** | 100                           |
@@ -160,7 +186,7 @@ Review and collection of Post-Production information is described in SOP Post-Ma
 ## 3. Roles
 
 | Title                                           | Name(s) |
-|-------------------------------------------------|---------|
+| ----------------------------------------------- | ------- |
 | Risk Manager                                    |         |
 | Context / Subject Matter Expert, e.g. physician |         |
 

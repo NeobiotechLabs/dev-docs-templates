@@ -1,15 +1,48 @@
 # Software Development and Maintenance Plan
 
+<!-- AI AGENT 작성 지침
+이 문서는 IEC 62304 Cl.5.1 기반 SW 개발 및 유지보수 계획서입니다. PA 단계 핵심 산출물입니다.
+
+작성 전 반드시 다음 문서를 참조하세요:
+  - 시스템 요구사항 명세서(system-requirements-spec.md): 팀 구성, 타겟 환경 확인
+  - 사용 목적 정의서(intended-use.md): 제품명, SW 안전 등급 확인
+
+작성 지침:
+1. Section 2.2 (SW 안전 등급): IEC 62304 Cl.4.3 기준으로 Class A/B/C를 결정하고 근거를 기술하세요
+2. Section 3 (Design Phases): 우리 Gate 프로세스에 맞게 PA/EA/ER/CA로 업데이트하세요
+   - PA: 기획 및 계획 -> 개발 시작 전 승인
+   - EA: 요구사항 및 설계 -> 코딩 시작 전 승인
+   - ER: 구현 및 검증 -> Sprint 반복 (Sprint No, 완료 일자 기입)
+   - CA: 최종 릴리스 -> 검증 완료 후 승인
+3. Section 5 (Configuration Management): 반드시 상세히 작성하세요 (형상관리 계획 역할)
+   - Git 브랜치 전략 (feature/release/main 등)
+   - 버전 체계 (semantic versioning: MAJOR.MINOR.PATCH)
+   - 변경 통제 절차 (Change Evaluation List 참조)
+4. 사이버보안 계획은 별도 파일 없이 이 SDP 내에 챕터로 작성하세요:
+   - 보안 설계 원칙 (Security by Design)
+   - 취약점 모니터링 주기 (CVE 검토)
+   - 보안 사고 대응 절차
+5. Section 2.1 팀 구성에 실제 인원을 기재하고 역할을 구체화하세요
+
+완성 체크리스트:
+  [ ] 제품명 및 SW 안전 등급 명시
+  [ ] Design Phases에 PA/EA/ER/CA Gate 반영
+  [ ] Section 5 형상관리 상세 기술 (Git 브랜치, 버전 체계)
+  [ ] 사이버보안 챕터 추가 (IEC 81001-5-1)
+  [ ] 담당자 역할(R&R) 기재
+-->
+
+
 This document summarizes development and maintenance activities.
 
 ## Mapping of Standard Requirements to Document Sections
 
 | ISO 13485:2016 Section                | Document Section |
-|---------------------------------------|------------------|
+| ------------------------------------- | ---------------- |
 | 7.3.2 Design and Development Planning | 1, 2, 3, 7       |
 
 | Classes | IEC 62304:2006 Section                                                     | Document Section |
-|---------|----------------------------------------------------------------------------|------------------|
+| ------- | -------------------------------------------------------------------------- | ---------------- |
 | A, B, C | 4.4.2 Risk Management Activities                                           | 1                |
 | A, B, C | 5.1.1 a) (Processes)                                                       | 1                |
 | A, B, C | 5.1.1 b) (Deliverables)                                                    | 1                |
@@ -45,11 +78,11 @@ Please see the relevant processes for the following activities:
 
 ### 2.1 Team
 
-| Role               | Count | Responsibilities                           |
-|--------------------|-------|--------------------------------------------|
-| Head of Development| 1     | Prioritizing tasks and technical oversight |
-| Frontend Developer | 2     | Implementing Frontend Software Requirements|
-| Backend Developer  | 1     | Implementing Backend Software Requirements |
+| Role                | Count | Responsibilities                            |
+| ------------------- | ----- | ------------------------------------------- |
+| Head of Development | 1     | Prioritizing tasks and technical oversight  |
+| Frontend Developer  | 2     | Implementing Frontend Software Requirements |
+| Backend Developer   | 1     | Implementing Backend Software Requirements  |
 
 ### 2.2 Software
 
@@ -74,7 +107,7 @@ The software's lifetime is established to be \[for example: three years\]. This 
 > List the languages you’ll be using, including compiler and language versions.
 
 | Name   | Version |
-|--------|---------|
+| ------ | ------- |
 | Python | 3.8     |
 
 #### Development Software
@@ -82,7 +115,7 @@ The software's lifetime is established to be \[for example: three years\]. This 
 > List software used to support development, e.g., IDEs.
 
 | Name    | Version  |
-|---------|----------|
+| ------- | -------- |
 | PyCharm | 2020.1.4 |
 
 ### 2.3 System Requirement / Target Runtime
@@ -90,7 +123,7 @@ The software's lifetime is established to be \[for example: three years\]. This 
 > List your target runtime(s).
 
 | Name    | Version |
-|---------|---------|
+| ------- | ------- |
 | CPython | 3.8     |
 
 > Specify system requirements, e.g., the minimum specifications of the server / compute instance you'll be
@@ -108,7 +141,7 @@ The software's lifetime is established to be \[for example: three years\]. This 
 > The 13485 requires you to specify "Design Phases". Here are some suggestions which you could use.
 
 | Title          | Estimated Completion Date | Description | Review method                   |
-|----------------|---------------------------|-------------| ------------------------------- |
+| -------------- | ------------------------- | ----------- | ------------------------------- |
 | Specification  |                           |             | Software Requirements Checklist |
 | Implementation |                           |             | Code Reviews                    |
 | Testing        |                           |             | System Test                     |

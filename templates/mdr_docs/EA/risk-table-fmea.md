@@ -1,7 +1,32 @@
 # Failure Mode and Effects Analysis (FMEA): Risk Table
 
+<!-- AI AGENT 작성 지침
+이 문서는 ISO 14971:2019 기반 위험 분석 테이블입니다. EA 단계 초안을 작성하고, ER 단계 Sprint마다 업데이트합니다.
+
+작성 전 반드시 다음 문서를 참조하세요:
+  - 사용 목적 정의서(intended-use.md): 의도된 사용자, 사용 환경, 의료 목적 확인
+  - 위험 관리 계획서(risk-management-plan.md): 위험 허용 기준 매트릭스(P1~P5, S1~S4) 확인
+  - SW 요구사항 명세서(software-requirements-list.md): SRS-S-xxx 보안 요구사항 확인
+
+작성 지침:
+1. 위험 ID 체계: HA-xxx (Hazard Analysis), FM-xxx (Failure Mode), RC-xxx (Risk Control)
+2. 다음 3가지 위험 카테고리를 반드시 포함하세요:
+   a) SW 오동작으로 인한 위험 (IEC 62304 Cl.7.1)
+   b) 사용 오류로 인한 위험 (IEC 62366-1)
+   c) 사이버보안 위협으로 인한 위험 (IEC 81001-5-1, MDR Annex I 17.2)
+3. 확률(P) 및 중증도(S) 등급은 RMP의 매트릭스 기준을 사용하세요
+4. 위험 통제 조치 적용 후 잔여 위험(Residual Risk)의 허용 여부를 반드시 명시하세요
+5. 위험 통제 조치(RC)는 SRS에 반영 후 "위험 통제 조치? = Yes"로 연결하세요
+
+위험 ID 예시:
+  HA-001: 초기 위험 식별 (PHA)
+  FM-001: 소프트웨어 고장 모드
+  RC-001: 위험 통제 조치
+-->
+
+
 | ISO 14971:2019 Section | Document Section                                   |
-|------------------------|----------------------------------------------------|
+| ---------------------- | -------------------------------------------------- |
 | 5.2                    | (all; entries about reasonably foreseeable misuse) |
 | 5.4                    | 3                                                  |
 | 5.5                    | 3, 4                                               |
@@ -12,7 +37,7 @@
 | 7.5                    | 4                                                  |
 
 | IEC 62366-1:2015 Section | Title                                                          | Document Section |
-|--------------------------|----------------------------------------------------------------|------------------|
+| ------------------------ | -------------------------------------------------------------- | ---------------- |
 | 4.1.2                    | Risk Control as it relates to User Interface design            | 4                |
 | 5.3                      | Identify known or foreseeable Hazards and Hazardous Situations | 1,3              |
 
@@ -41,11 +66,11 @@ multiple sections:
 > analysis (including probability and severity) of that risk. It refers to the ID(s) in the Hazards and
 > Analysis table below.
 
-| ID | Source                 | Description                           | Hazard ID(s) |
-|----|------------------------|---------------------------------------|--------------|
-| 1  | General Considerations | Wrong Covid Prediction                | 1            |
-| 2  | Intended Use           | Wrong Covid Prediction                | 1            |
-| 3  | Usability Test         | User misunderstands prediction result | 1            |
+| ID  | Source                 | Description                           | Hazard ID(s) |
+| --- | ---------------------- | ------------------------------------- | ------------ |
+| 1   | General Considerations | Wrong Covid Prediction                | 1            |
+| 2   | Intended Use           | Wrong Covid Prediction                | 1            |
+| 3   | Usability Test         | User misunderstands prediction result | 1            |
 
 
 ## 2. Failure Modes
@@ -60,10 +85,10 @@ multiple sections:
 > backend (ID 1), or the frontend displays the predictions wrongly (ID 2). They both lead to the same hazard
 > (ID 1) which is listed in the Hazards and Analysis table below.
 
-| ID | Software System | Failure Mode                       | Hazard ID(s) |
-|----|-----------------|------------------------------------|--------------|
-| 1  | Backend         | Wrong Covid Prediction             | 1            |
-| 2  | Frontend        | Covid Prediction displayed wrongly | 1            |
+| ID  | Software System | Failure Mode                       | Hazard ID(s) |
+| --- | --------------- | ---------------------------------- | ------------ |
+| 1   | Backend         | Wrong Covid Prediction             | 1            |
+| 2   | Frontend        | Covid Prediction displayed wrongly | 1            |
 
 ## 3. Hazards and Analysis
 
@@ -92,9 +117,9 @@ multiple sections:
 >
 > The next table contains the list of Risk Control Measures.
 
-| ID | Hazard                 | p1   | Hazardous Situation                      | p2  | Harm                | p1*p2 | P  | S  | Acceptable? | Comment | Risk Control ID(s) | P  | S  | Acceptable? |
-|----|------------------------|------|------------------------------------------|-----|---------------------|-------|----|----|-------------|---------|--------------------|----|----|-------------|
-| 1  | Wrong Covid prediction | 0.01 | User thinks he is healthy, but has Covid | 0.1 | Disease progression | 0.001 | P4 | S2 | No          |         | 1                  | P3 | S2 | Yes         |
+| ID  | Hazard                 | p1   | Hazardous Situation                      | p2  | Harm                | p1*p2 | P   | S   | Acceptable? | Comment | Risk Control ID(s) | P   | S   | Acceptable? |
+| --- | ---------------------- | ---- | ---------------------------------------- | --- | ------------------- | ----- | --- | --- | ----------- | ------- | ------------------ | --- | --- | ----------- |
+| 1   | Wrong Covid prediction | 0.01 | User thinks he is healthy, but has Covid | 0.1 | Disease progression | 0.001 | P4  | S2  | No          |         | 1                  | P3  | S2  | Yes         |
 
 ## 4. Risk Control Measures
 
@@ -113,9 +138,9 @@ multiple sections:
 > Also note that, in simplified terms, Information for Safety must actually be displayed in your application
 > to have any effect. Like, not in the user manual, because nobody reads the manual.
 
-| ID  | Description | Type | Probability Reduction | Severity Reduction | Negative Influence on Device Safety / Performance Introduced by Mitigation Measure? | Verification Implementation | Verification Effectiveness |
-| --- | ----------- | ---- | --------------------- | ------------------ | ----------------------------------------- | --------------------------- | --------------------------- |
-| 1   | Check prediction algorithm with test data | Protective Measure | 10^-2 | 1 | No | Link Software Test ID | Link Usability Test ID |
+| ID  | Description                               | Type               | Probability Reduction | Severity Reduction | Negative Influence on Device Safety / Performance Introduced by Mitigation Measure? | Verification Implementation | Verification Effectiveness |
+| --- | ----------------------------------------- | ------------------ | --------------------- | ------------------ | ----------------------------------------------------------------------------------- | --------------------------- | -------------------------- |
+| 1   | Check prediction algorithm with test data | Protective Measure | 10^-2                 | 1                  | No                                                                                  | Link Software Test ID       | Link Usability Test ID     |
 
 ---
 
