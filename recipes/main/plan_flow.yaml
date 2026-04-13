@@ -66,7 +66,7 @@ instructions: |
   3. [전역 지도(.goosehints) 확인]
      - 아래 Python 명령으로 `.goosehints` 파일의 존재 여부와 내용을 확인하세요:
        `python3 -c "import pathlib; p=pathlib.Path('.goosehints'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
-     - 출력이 `NOT_FOUND` 이거나 내용이 부실하면, 디렉토리 구조를 스캔하여 `.goosehints` 파일을 생성/갱신하세요.
+     - **중요**: .goosehints 파일이 없거나 내용이 부실하더라도 **디렉토리 스캔을 수행하지 마세요**. CI 환경에서는 매번 새로운 workspace가 생성되므로 스캔 로그 폭발을 방지하기 위해 스캔을 건너뛰고 바로 다음 단계로 진행하세요.
 
   4. [티켓 유형(issue_type) 분류 — Task 7.3 핵심]
 
