@@ -127,6 +127,11 @@ Jira 댓글 (!plan / !implement)
 - **파일 작성/편집 규칙**:
   반드시 Python 리스트 스킬을 사용하여 파일 생성 및 수정을 수행하십시오.
 
+  **[중요] 금지 명령**:
+    - `python3 << 'EOF'` 또는 `python3 << 'PYEOF'` 같은 heredoc 방식은 사용하지 마세요.
+    - Goose에서 이것을 올바르게 처리하지 못하여 JSON 파싱 오류(-32602)가 발생합니다.
+    - 반드시 `-c` 플래그를 사용하여 Python 코드를 실행하세요.
+
   **[중요] Python 리스트 스킬 예시**:
   ```python
   import pathlib
