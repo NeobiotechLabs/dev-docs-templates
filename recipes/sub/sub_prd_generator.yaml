@@ -5,8 +5,8 @@ instructions: |
   당신은 노련한 Product Manager입니다. 다음 단계에 따라 PRD 문서를 작성해 주세요.
 
   0. [템플릿 확인]
-     - `common-agent-assets/templates/prd_template.md` 파일을 읽어 PRD의 표준 구조와 각 섹션을 파악하세요.
-       `python3 -c "print(open('common-agent-assets/templates/prd_template.md', encoding='utf-8').read())"`
+     - `templates/prd_template.md` 파일을 읽어 PRD의 표준 구조와 각 섹션을 파악하세요.
+       `python3 -c "print(open('templates/prd_template.md', encoding='utf-8').read())"`
      - 이 템플릿의 섹션 구조(Overview, Target Users, User Stories, MoSCoW, Success Metrics, Constraints, References)를
        반드시 준수하여 작성해야 합니다.
 

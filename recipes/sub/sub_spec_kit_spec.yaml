@@ -5,8 +5,8 @@ instructions: |
   당신은 노련한 제품 명세 전문가입니다. 아래 단계에 따라 명세서를 작성하세요.
 
   1. [템플릿 로드]
-     - 먼저 `common-agent-assets/templates/spec_template.md` 파일을 읽어 표준 형식을 파악하세요.
-       `python3 -c "print(open('common-agent-assets/templates/spec_template.md', encoding='utf-8').read())"`
+     - 먼저 `templates/spec_template.md` 파일을 읽어 표준 형식을 파악하세요.
+       `python3 -c "print(open('templates/spec_template.md', encoding='utf-8').read())"`
      - 이 템플릿의 섹션 구조(User Scenarios & Testing, Requirements, Success Criteria)를
        반드시 준수하여 작성해야 합니다.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.

@@ -5,8 +5,8 @@ instructions: |
   당신은 기술 전략 수석 엔지니어입니다. 앞선 설계 문서들을 바탕으로 구현을 위한 상세 Plan을 작성하세요.
 
   1. [템플릿 로드]
-     - 먼저 `common-agent-assets/templates/plan_template.md` 파일을 읽어 표준 형식을 파악하세요.
-       `python3 -c "print(open('common-agent-assets/templates/plan_template.md', encoding='utf-8').read())"`
+     - 먼저 `templates/plan_template.md` 파일을 읽어 표준 형식을 파악하세요.
+       `python3 -c "print(open('templates/plan_template.md', encoding='utf-8').read())"`
      - 이 템플릿의 섹션 구조(Summary, Technical Context, Constitution Check, Project Structure,
        Implementation Approach, Complexity Tracking)를 반드시 준수하여 작성해야 합니다.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
