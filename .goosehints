@@ -50,13 +50,13 @@ Jira 댓글 (!plan / !implement)
 {
   "ticket_id":    "AUT-1",
   "command":      "!plan",
-  "command_args": "fibonazzi 수열을 보여주는 기능",
+  "command_args": "피보나치 수열을 보여주는 기능",
   "reporter":     "user@company.com",
   "summary":      "업무 요약",
   "description":  "티켓 본문 (비어 있을 수 있음)",
   "issue_type":   "작업",
   "priority":     "Medium",
-  "attachments":  ["path/to/file.png"]
+  "attachments": ["path/to/file.png"]
 }
 ```
 
@@ -91,8 +91,8 @@ Jira 댓글 (!plan / !implement)
 |---|---|---|---|
 | `!draft iu` | `runner/prompts/draft_iu.md` | `docs/artifacts/IntendedUse.md` + Jira 필드 업데이트 | Intended Use |
 | `!draft prd` | `runner/prompts/draft_prd.md` | `docs/artifacts/PRD.md` + Jira 필드 업데이트 | PRD (Product Requirement) |
-| `!draft sr` | `runner/prompts/draft_sr.md` | `docs/artifacts/sr_list.json` → 시스템이 SR 티켓 자동 생성 | System Requirement |
-| `!draft hazard` | `runner/prompts/draft_hazard.md` | `docs/artifacts/hazard_list.json` → 시스템이 Hazard 티켓 자동 생성 | Hazard |
+| `!draft sr` | `runner/prompts/draft_sr.md` | `docs/artifacts/sr_list.json` → 시스템 이 SR 티켓 자동 생성 | System Requirement |
+| `!draft hazard` | `runner/prompts/draft_hazard.md` | `docs/artifacts/hazard_list.json` → 시스템 이 Hazard 티켓 자동 생성 | Hazard |
 | `!draft hazard_all` | `runner/prompts/draft_hazard_all.md` | 전체 하위 Hazard 일괄 분석 및 생성 | Hazard (일괄) |
 | `!draft req` | `runner/prompts/draft_req.md` | `docs/artifacts/requirement_list.json` → System Requirement 일괄 도출 | System Requirement (일괄) |
 | `!draft classification` | `runner/prompts/draft_classification.md` | `docs/artifacts/classification_list.json` → Classification 티켓 자동 생성 | Classification (IEC 62304) |
@@ -125,7 +125,24 @@ Jira 댓글 (!plan / !implement)
   `python -c "import pathlib; print(pathlib.Path('경로.md').read_text(encoding='utf-8') if pathlib.Path('경로.md').exists() else 'NOT_FOUND')"`
 
 - **파일 작성/편집 규칙**:
-  반드시 `safe_writer` 툴을 사용하여 파일 생성 및 수정을 수행하십시오.
+  반드시 Python 리스트 스킬을 사용하여 파일 생성 및 수정을 수행하십시오.
+
+  **[중요] Python 리스트 스킬 예시**:
+  ```python
+  import pathlib
+  lines = [
+      "# 제목",
+      "",
+      "- 내용 1",
+      "- 내용 2"
+  ]
+  pathlib.Path("파일명.md").write_text("\n".join(lines), encoding="utf-8")
+  ```
+
+  **규칙**:
+  - 반드시 쌍따옴표(")를 사용하세요. 백틱(')은 JSON 파싱 오류를 유발합니다.
+  - 개행은 "\n".join(lines) 방식을 사용하세요. chr(10) 방식은 사용하지 마세요.
+  - 한 줄씩 따로따옴표로 묶어 리스트에 추가하세요. 거대한 텍스트 블록을 한 번에 묶지 마세요.
 
 ---
 
@@ -135,13 +152,13 @@ Always use this Toolkit when you are asked to query Jira or save your work to Ji
 DO NOT use generic `curl` or manual Python scripts unless instructed.
 
 ### Command Wrapper
-To use the toolkit, run the python script located at:
+To use toolkit, run the python script located at:
 **`python3 common-agent-assets/runner/jira_toolkit.py <command> [args...]`**
 
 ### Available Commands:
 
 #### 1. schema
-Outputs the list of fields available for a given Jira Issue Type. This tells you the EXACT "Field Name" you should use when updating.
+Outputs list of fields available for a given Jira Issue Type. This tells you the EXACT "Field Name" you should use when updating.
 **Usage:**
 `python3 common-agent-assets/runner/jira_toolkit.py schema --type "Requirement"`
 
@@ -151,7 +168,7 @@ Fetches detailed context about the target ticket, its parent, and ALL linked iss
 `python3 common-agent-assets/runner/jira_toolkit.py fetch_linked IMR-79`
 
 #### 3. update
-Updates the fields of a given ticket. You MUST write your fields to a JSON file first (e.g., `temp_fields.json`), then pass it to the toolkit.
+Updates fields of a given ticket. You MUST write your fields to a JSON file first (e.g., `temp_fields.json`), then pass it to the toolkit.
 **Usage:**
 `python3 common-agent-assets/runner/jira_toolkit.py update IMR-79 temp_fields.json`
 *Note:* In the JSON file, use the "Field Name" exactly as output by the `schema` command.
