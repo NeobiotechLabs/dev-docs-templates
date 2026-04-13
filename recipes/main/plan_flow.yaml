@@ -46,13 +46,13 @@ instructions: |
 
   [필수 규칙 — 모든 shell 명령어에 적용]
      - 파일 읽기, 존재 확인, 디렉토리 목록 조회는 운영체제에 관계없이 항상 Python을 사용하세요.
-       파일 읽기: `python -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
-       디렉토리 목록: `python -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*')]"` 
+       파일 읽기: `python3 -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+       디렉토리 목록: `python3 -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*')]"` 
      - shell 내장 명령어(`if exist`, `cat`, `ls`, `mkdir -p` 등)는 플랫폼 호환성 문제가 있으므로 사용하지 마세요.
 
   1. [컨텍스트 로드]
      - 인코딩 문제(한글 깨짐)를 방지하기 위해 반드시 아래와 같이 Python으로 읽으세요:
-       `python -c "import json; ctx=json.load(open('context.json', encoding='utf-8')); print(json.dumps(ctx, ensure_ascii=False, indent=2))"`
+       `python3 -c "import json; ctx=json.load(open('context.json', encoding='utf-8')); print(json.dumps(ctx, ensure_ascii=False, indent=2))"`
      - 절대로 `cat context.json` 이나 파일 읽기용 `code_execution` (Goose built-in 외)을 사용하지 마십시오.
      - 다음 필드를 반드시 확인하세요:
        - `ticket_id`, `summary`, `description`, `command`, `command_args`
@@ -61,11 +61,11 @@ instructions: |
      - `docs/progress/session_context.md` 가 존재한다면 **반드시 읽어** 기존 컨텍스트 맥락을 파악하세요.
 
   2. [작업 공간 초기화]
-     - `python -c "import pathlib; pathlib.Path('docs/spec-kit').mkdir(parents=True, exist_ok=True); print('docs/spec-kit ready')"`
+     - `python3 -c "import pathlib; pathlib.Path('docs/spec-kit').mkdir(parents=True, exist_ok=True); print('docs/spec-kit ready')"`
 
   3. [전역 지도(.goosehints) 확인]
      - 아래 Python 명령으로 `.goosehints` 파일의 존재 여부와 내용을 확인하세요:
-       `python -c "import pathlib; p=pathlib.Path('.goosehints'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+       `python3 -c "import pathlib; p=pathlib.Path('.goosehints'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
      - 출력이 `NOT_FOUND` 이거나 내용이 부실하면, 디렉토리 구조를 스캔하여 `.goosehints` 파일을 생성/갱신하세요.
 
   4. [티켓 유형(issue_type) 분류 — Task 7.3 핵심]
@@ -94,7 +94,7 @@ instructions: |
 
      6-A. [spec-kit 기존 파일 유무 판단 및 신규 요구사항 비교 -- 반드시 실행]
        - `docs/spec-kit/01_spec.md`이 존재하면 Python으로 챜 3000자을 읽으세요:
-         `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print(p.read_text(encoding='utf-8')[:3000] if p.exists() else 'NOT_FOUND')"`
+         `python3 -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print(p.read_text(encoding='utf-8')[:3000] if p.exists() else 'NOT_FOUND')"`
        - 읽은 내용과 `command_args`를 비교하여 아래 중 하나라도 해당하면 **갱신 필요**로 판단하세요:
          * `command_args`에 언급된 기능이 현재 spec에 없거나 서술이 전혀 다릅니다
          * `command_args`가 새로운 시나리오, 엄거조건, 동작 법칙을 요청합니다
@@ -165,7 +165,7 @@ instructions: |
 
      [8-B] Jira 직접 게시 시도 (추가 -- 8-A 이후 수행)
      .agents/skills/jira-commenter/SKILL.md를 참조하여 Jira에도 직접 댓글을 게시하세요:
-       python .agents/skills/jira-commenter/scripts/post_comment.py \
+       python3 .agents/skills/jira-commenter/scripts/post_comment.py \
          --type done \
          --ticket {ticket_id} \
          --summary "[!plan 완료] 티켓유형: {issue_type}, 생성파일: 01_spec.md/02_plan.md/03_tasks.md, 전역문서: (갱신여부)"
@@ -175,7 +175,7 @@ instructions: |
      - git commit 및 push를 실행하세요:
        `git add docs/ .goosehints && git commit -m "[{ticket_id}] !plan -- 기획 문서 생성 ({issue_type})" && git push -u origin HEAD`
      - push 완료 후 아래 Python 명령으로 commit ID를 확인하세요:
-       `python -c "import subprocess; r=subprocess.run(['git','rev-parse','--short','HEAD'],capture_output=True,text=True); print('Commit ID:', r.stdout.strip())"`
+       `python3 -c "import subprocess; r=subprocess.run(['git','rev-parse','--short','HEAD'],capture_output=True,text=True); print('Commit ID:', r.stdout.strip())"`
 
 
   9. [질문 게시]

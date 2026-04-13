@@ -6,7 +6,7 @@ instructions: |
 
   0. [템플릿 확인]
      - `common-agent-assets/templates/prd_template.md` 파일을 읽어 PRD의 표준 구조와 각 섹션을 파악하세요.
-       `python -c "print(open('common-agent-assets/templates/prd_template.md', encoding='utf-8').read())"`
+       `python3 -c "print(open('common-agent-assets/templates/prd_template.md', encoding='utf-8').read())"`
      - 이 템플릿의 섹션 구조(Overview, Target Users, User Stories, MoSCoW, Success Metrics, Constraints, References)를
        반드시 준수하여 작성해야 합니다.
 
