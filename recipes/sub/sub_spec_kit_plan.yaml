@@ -27,7 +27,27 @@ instructions: |
 
   4. [파일 저장 및 확인]
      - 작성된 내용을 `docs/spec-kit/02_plan.md`에 저장하세요.
-     - **중요**: 내용이 방대하여 도구 호출 에러가 날 우려가 있으므로, **섹션별(## 단위)로 나누어 Python의 append 모드(`mode='a'`)를 사용하여 점진적으로 작성**하는 것을 권장합니다.
+     - **중요 - 따옴표 중첩 오류 방지**:
+       * `python3 -c`를 직접 사용하여 다중 줄 문자열을 전달하면 따옴표 중첩으로 인자 파싱 실패(-32602) 발생
+       * **임시 Python 파일을 생성 후 실행**하는 방식을 사용하세요:
+         ```bash
+         # 1. 임시 Python 파일 생성
+         python3 -c "import pathlib; pathlib.Path('.temp_write.py').write_text('''\nimport pathlib\npath = pathlib.Path(\"docs/spec-kit/02_plan.md\")\ncontent = \"\"\"{PLAN_CONTENT}\"\"\"\npath.parent.mkdir(parents=True, exist_ok=True)\npath.write_text(content, encoding=\"utf-8\")\nprint(\"OK:\", path.stat().st_size, \"bytes\")\n''', encoding='utf-8')"
+
+         # 2. 임시 파일 실행
+         python3 .temp_write.py
+
+         # 3. 임시 파일 삭제
+         python3 -c "import pathlib; pathlib.Path('.temp_write.py').unlink() if pathlib.Path('.temp_write.py').exists() else None"
+         ```
+       * **섹션별 분할 작성 방법 (추천)**: 내용이 너무 길면 섹션별(## 단위)로 나누어 append 모드로 점진적 작성:
+         ```bash
+         # 첫 번째 섹션 쓰기 (초기화 + 헤더)
+         python3 -c "import pathlib; pathlib.Path('docs/spec-kit/02_plan.md').write_text('''{SECTION_1_CONTENT}''', encoding='utf-8')"
+
+         # 두 번째 섹션 추가 (append)
+         python3 -c "import pathlib; pathlib.Path('docs/spec-kit/02_plan.md').write_text(pathlib.Path('docs/spec-kit/02_plan.md').read_text(encoding='utf-8') + '''{SECTION_2_CONTENT}''', encoding='utf-8')"
+         ```
      - **필수**: 저장 후 `python3 -c "import pathlib; p=pathlib.Path('docs/spec-kit/02_plan.md'); print('OK:', p.stat().st_size, 'bytes') if p.exists() else print('ERROR: 파일 없음')"` 으로 생성을 확인하세요.
 
 prompt: "plan_template.md를 먼저 읽고, 이를 준수하여 기술 이행 계획(Plan) 작성을 시작해 주세요."
