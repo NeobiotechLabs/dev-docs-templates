@@ -47,7 +47,7 @@ instructions: |
   [필수 규칙 — 모든 shell 명령어에 적용]
      - 파일 읽기, 존재 확인, 디렉토리 목록 조회는 운영체제에 관계없이 항상 Python을 사용하세요.
        파일 읽기: `python3 -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
-       디렉토리 목록: `python3 -c "import pathlib; [print(p.name) for p in sorted(pathlib.Path('docs').rglob('*.md'))[:20]]  # 최대 20개 파일만 조회"` 
+       디렉토리 목록: `python3 -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*')]"` 
      - shell 내장 명령어(`if exist`, `cat`, `ls`, `mkdir -p` 등)는 플랫폼 호환성 문제가 있으므로 사용하지 마세요.
 
   1. [컨텍스트 로드]

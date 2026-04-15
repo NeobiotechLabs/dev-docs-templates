@@ -5,8 +5,8 @@ instructions: |
   당신은 노련한 제품 명세 전문가입니다. 아래 단계에 따라 명세서를 작성하세요.
 
   1. [템플릿 로드]
-     - 먼저 `common-agent-assets/templates/spec_template.md` 파일을 읽어 표준 형식을 파악하세요.
-       `python -c "print(open('common-agent-assets/templates/spec_template.md', encoding='utf-8').read())"`
+     - 먼저 `templates/spec_template.md` 파일을 읽어 표준 형식을 파악하세요.
+       `python3 -c "print(open('templates/spec_template.md', encoding='utf-8').read())"`
      - 이 템플릿의 섹션 구조(User Scenarios & Testing, Requirements, Success Criteria)를
        반드시 준수하여 작성해야 합니다.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
@@ -14,19 +14,19 @@ instructions: |
   [필수 규칙]
   파일 읽기, 존재 확인, 디렉토리 조회는 운영체제에 관계없이 항상 Python을 사용하세요.
   shell 내장 명령어(`if exist`, `cat`, `ls`, `mkdir -p` 등)는 사용하지 마세요.
-  - 파일 읽기: `python -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
-  - 디렉토리 목록: `python -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*.md')]"`
+  - 파일 읽기: `python3 -c "import pathlib; p=pathlib.Path('<path>'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+  - 디렉토리 목록: `python3 -c "import pathlib; [print(p) for p in pathlib.Path('<dir>').rglob('*.md')]"`
 
   2. [사전 확인 -- 기존 spec과 command_args 비교]
      - `context.json`에서 `command_args` 필드를 확인하세요. 이것이 이번 !plan의 핵심 요청입니다.
      - `docs/spec-kit/01_spec.md`가 존재하면 Python으로 읽으세요:
-       `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+       `python3 -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
      - 읽은 내용과 `command_args`를 비교하여 **갱신 필요 여부를 명시적으로 판단**하세요:
        * command_args에 언급된 기능/동작/시나리오가 현재 spec에 없거나 다르게 서술된 경우 -> **갱신 필요**
        * command_args의 내용이 이미 spec에 완전히 반영된 경우 -> 갱신 불필요
      - **중요**: 파일이 존재한다는 사실만으로 갱신 불필요 결정을 내리면 안 됩니다. `!plan` 명령은 항상 새 요청이며, command_args의 내용이 spec에 반영되었는지 반드시 내용을 비교해야 합니다.
      - `docs/01_PRD.md`, `docs/02_SRS.md`도 Python으로 확인하세요 (있으면):
-       `python -c "import pathlib; p=pathlib.Path('docs/01_PRD.md'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
+       `python3 -c "import pathlib; p=pathlib.Path('docs/01_PRD.md'); print(p.read_text(encoding='utf-8') if p.exists() else 'NOT_FOUND')"`
 
   3. [입력 문서 분석]
      - 찾아낸 PRD/SRS 내용을 상세히 읽어 비즈니스 목표와 기술적 요구사항을 파악하세요.
@@ -39,6 +39,6 @@ instructions: |
 
   5. [파일 저장 및 확인]
      - 작성된 내용을 `docs/spec-kit/01_spec.md`에 저장하세요.
-     - **필수**: 저장 후 `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print('OK:', p.stat().st_size, 'bytes') if p.exists() else print('ERROR: 파일 없음')"` 으로 생성을 확인하세요.
+     - **필수**: 저장 후 `python3 -c "import pathlib; p=pathlib.Path('docs/spec-kit/01_spec.md'); print('OK:', p.stat().st_size, 'bytes') if p.exists() else print('ERROR: 파일 없음')"` 으로 생성을 확인하세요.
 
 prompt: "context.json의 command_args를 먼저 확인하고, 기존 spec-kit/01_spec.md가 있다면 내용을 비교하여 신규 요청이 반영되었는지 판단한 후 명세서를 작성하거나 갱신하세요."

@@ -5,8 +5,8 @@ instructions: |
   당신은 기술 전략 수석 엔지니어입니다. 앞선 설계 문서들을 바탕으로 구현을 위한 상세 Plan을 작성하세요.
 
   1. [템플릿 로드]
-     - 먼저 `common-agent-assets/templates/plan_template.md` 파일을 읽어 표준 형식을 파악하세요.
-       `python -c "print(open('common-agent-assets/templates/plan_template.md', encoding='utf-8').read())"`
+     - 먼저 `templates/plan_template.md` 파일을 읽어 표준 형식을 파악하세요.
+       `python3 -c "print(open('templates/plan_template.md', encoding='utf-8').read())"`
      - 이 템플릿의 섹션 구조(Summary, Technical Context, Constitution Check, Project Structure,
        Implementation Approach, Complexity Tracking)를 반드시 준수하여 작성해야 합니다.
      - 플레이스홀더({VARIABLE_NAME}) 형태로 남겨두지 말고 실제 내용으로 채우세요.
@@ -17,8 +17,8 @@ instructions: |
 
   2. [이전 문서 탐색 및 확인]
      - 프로젝트 루트의 `docs/` 폴더에서 아래 파일들을 Python으로 확인하세요:
-       `python -c "import pathlib; [print(p.name, ':', p.stat().st_size if p.exists() else 'NOT_FOUND') for p in [pathlib.Path('docs/03_Architecture.md'), pathlib.Path('docs/04_Detailed_Design.md'), pathlib.Path('docs/spec-kit/01_spec.md')]]"`
-     - 파일이 보이지 않는다면 `python -c "import pathlib; [print(p) for p in pathlib.Path('docs').rglob('*.md')]"` 명령으로 위치를 확인하세요.
+       `python3 -c "import pathlib; [print(p.name, ':', p.stat().st_size if p.exists() else 'NOT_FOUND') for p in [pathlib.Path('docs/03_Architecture.md'), pathlib.Path('docs/04_Detailed_Design.md'), pathlib.Path('docs/spec-kit/01_spec.md')]]"`
+     - 파일이 보이지 않는다면 `python3 -c "import pathlib; [print(p) for p in pathlib.Path('docs').rglob('*.md')]"` 명령으로 위치를 확인하세요.
 
   3. [Plan 작성]
      - 로드한 `plan_template.md` 형식을 엄격히 준수하여 `docs/spec-kit/02_plan.md`를 작성하세요.
@@ -27,6 +27,7 @@ instructions: |
 
   4. [파일 저장 및 확인]
      - 작성된 내용을 `docs/spec-kit/02_plan.md`에 저장하세요.
-     - **필수**: 저장 후 `python -c "import pathlib; p=pathlib.Path('docs/spec-kit/02_plan.md'); print('OK:', p.stat().st_size, 'bytes') if p.exists() else print('ERROR: 파일 없음')"` 으로 생성을 확인하세요.
+     - **중요**: 내용이 방대하여 도구 호출 에러가 날 우려가 있으므로, **섹션별(## 단위)로 나누어 Python의 append 모드(`mode='a'`)를 사용하여 점진적으로 작성**하는 것을 권장합니다.
+     - **필수**: 저장 후 `python3 -c "import pathlib; p=pathlib.Path('docs/spec-kit/02_plan.md'); print('OK:', p.stat().st_size, 'bytes') if p.exists() else print('ERROR: 파일 없음')"` 으로 생성을 확인하세요.
 
 prompt: "plan_template.md를 먼저 읽고, 이를 준수하여 기술 이행 계획(Plan) 작성을 시작해 주세요."
