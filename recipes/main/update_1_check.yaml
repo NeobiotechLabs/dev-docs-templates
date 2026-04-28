@@ -1,0 +1,19 @@
+name: update_1_check
+title: Update Step 1 - 현재 필드 확인
+description: 현재 티켓의 모든 필드 값을 조회하고 사용자에게 보여줍니다.
+instructions: |
+  당신은 Jira 티켓 전문가입니다. 현재 티켓의 필드 값을 조회하여 사용자에게 보여주세요.
+
+  1. **현재 티켓 조회**
+     - 프로젝트 루트의 `workspace/{ticket_id}/context.json` 파일에서 티켓 정보를 읽으세요.
+     - Jira Toolkit을 사용하여 현재 티켓의 모든 필드 값을 조회하세요.
+     - 명령어: `python3 .agents/runner/jira_toolkit.py fetch_issue {ticket_id} --full`
+
+  2. **필드 정리 및 표시**
+     - 조회된 필드 값을 정리하여 사용자에게 보여주세요.
+     - 중요한 필드: summary, description, issuetype, status 등
+
+  3. **종료**
+     - 조회된 필드 정보를 사용자에게 보여주고 종료하세요.
+
+prompt: "현재 티켓의 모든 필드 값을 조회하여 사용자에게 보여주세요."
