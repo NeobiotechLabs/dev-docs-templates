@@ -62,3 +62,20 @@
 - [ ] 단위 테스트 커버리지 {COVERAGE_TARGET}% 이상
 - [ ] Edge Case 시나리오 검증 완료
 - [ ] 코드 리뷰 승인
+
+---
+
+## 추적성 (Traceability)
+
+| 방향 | 산출물 | 비고 |
+| ---- | ------ | ---- |
+| **Input from** | `docs/01_PRD.md` (prd_template) | 제품 요구사항 |
+| **Output to** | `docs/spec-kit/02_plan.md` (plan_template) | 구현 계획 |
+
+---
+
+## 변경 이력 (Revision History)
+
+| 버전 | 날짜   | 작성자   | 변경 내용 |
+| ---- | ------ | -------- | --------- |
+| 0.1  | {DATE} | {AUTHOR} | 초안 작성 |

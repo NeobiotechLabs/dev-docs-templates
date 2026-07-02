@@ -7,3 +7,19 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary / editor
+*.tmp
+~$*
+*.log

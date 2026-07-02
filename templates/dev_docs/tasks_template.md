@@ -103,3 +103,20 @@ T001 → T002 → T003 → T004
 | User Stories | {PHASE3_COUNT}    | {PHASE3_EFFORT}    |
 | Integration  | 2                 | {PHASEINT_EFFORT}  |
 | **합계**     | **{TOTAL_COUNT}** | **{TOTAL_EFFORT}** |
+
+---
+
+## 추적성 (Traceability)
+
+| 방향 | 산출물 | 비고 |
+| ---- | ------ | ---- |
+| **Input from** | `docs/spec-kit/02_plan.md` (plan_template) | 구현 계획 |
+| **Output to** | 구현 커밋/PR (`{TICKET_ID}`) | 코드 산출물 |
+
+---
+
+## 변경 이력 (Revision History)
+
+| 버전 | 날짜   | 작성자   | 변경 내용 |
+| ---- | ------ | -------- | --------- |
+| 0.1  | {DATE} | {AUTHOR} | 초안 작성 |

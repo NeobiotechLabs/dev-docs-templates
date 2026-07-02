@@ -91,3 +91,20 @@
 ## 7. 참고자료 (References)
 - 티켓: `{TICKET_ID}`
 - 관련 문서: `docs/02_SRS.md`, `docs/03_Architecture.md`
+
+---
+
+## 추적성 (Traceability)
+
+| 방향 | 산출물 | 비고 |
+| ---- | ------ | ---- |
+| **Input from** | Epic/Feature 티켓 `{TICKET_ID}` | 상위 비즈니스 요구 |
+| **Output to** | `docs/spec-kit/01_spec.md` (spec_template) | 기능 명세 |
+
+---
+
+## 변경 이력 (Revision History)
+
+| 버전 | 날짜   | 작성자   | 변경 내용 |
+| ---- | ------ | -------- | --------- |
+| 0.1  | {DATE} | {AUTHOR} | 초안 작성 |
