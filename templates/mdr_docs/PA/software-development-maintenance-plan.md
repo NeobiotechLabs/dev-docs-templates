@@ -14,21 +14,17 @@
    - EA: 요구사항 및 설계 -> 코딩 시작 전 승인
    - ER: 구현 및 검증 -> Sprint 반복 (Sprint No, 완료 일자 기입)
    - CA: 최종 릴리스 -> 검증 완료 후 승인
-3. Section 5 (Configuration Management): 반드시 상세히 작성하세요 (형상관리 계획 역할)
-   - Git 브랜치 전략 (feature/release/main 등)
-   - 버전 체계 (semantic versioning: MAJOR.MINOR.PATCH)
-   - 변경 통제 절차 (Change Evaluation List 참조)
-4. 사이버보안 계획은 별도 파일 없이 이 SDP 내에 챕터로 작성하세요:
-   - 보안 설계 원칙 (Security by Design)
-   - 취약점 모니터링 주기 (CVE 검토)
-   - 보안 사고 대응 절차
+3. Section 5 (Configuration Management): 형상관리 상세 정책·절차는 Configuration Management Plan
+   을 참조. 이 섹션은 개발 워크플로우 수준의 개요(Git 브랜치 전략이 CMP 기준을 따른다는 정도)만 기술.
+4. 보안(Security): 본 SDP에 보안 챕터를 두지 않음. 보안 계획·정책·위협 모델링은
+   Security Management Plan (IEC 81001-5-1) 참조.
 5. Section 2.1 팀 구성에 실제 인원을 기재하고 역할을 구체화하세요
 
 완성 체크리스트:
   [ ] 제품명 및 SW 안전 등급 명시
   [ ] Design Phases에 PA/EA/ER/CA Gate 반영
-  [ ] Section 5 형상관리 상세 기술 (Git 브랜치, 버전 체계)
-  [ ] 사이버보안 챕터 추가 (IEC 81001-5-1)
+  [ ] Section 5 형상관리는 Configuration Management Plan 참조 확인
+  [ ] Security Management Plan (IEC 81001-5-1) 참조 확인
   [ ] 담당자 역할(R&R) 기재
 -->
 
@@ -166,21 +162,13 @@ The software's lifetime is established to be \[for example: three years\]. This 
 > name versions and how you tag them. Your goal should be that you can retrieve an old version and build
 > it. Why? Something with a newer version may go wrong (harm patients) and you may need to roll back.
 
-*git is used as version control software. All source code and build files are committed to version control.*
+형상관리(식별·변경 통제·상태 기록·감사)의 상세 정책과 절차는 **Configuration Management Plan**
+을 따른다. 본 섹션에서는 개발 워크플로우 수준의 개요만 기술한다.
 
-*When implementing software requirements, developers create a new branch starting at master. During
-development, developers may create intermediate commits on this development branch.*
-
-*When implementation is completed, a new merge commit to master is created.*
-
-***This is also the activity which constitutes integration of software units.***
-
-*For each release, the goal is to be able to uniquely identify it and retrieve all relevant files (code,
-configuration files like build scripts, SOUPs, etc.) at any time in the future.*
-
-*When a new software version is released, its commit is tagged in git. The tag is constructed by adhering to
-semver ([semver.org](https://semver.org)) 2.0.0 which results in a version of format MAJOR.MINOR.PATCH,
-e.g., 1.0.0.*
+* Git을 버전 관리 도구로 사용. 모든 소스 코드·빌드 파일은 버전 관리 대상.
+* 개발자는 `master`에서 분기한 피처 브랜치에서 작업. 구현 완료 시 `master`로 머지 커밋 생성.
+* 각 release는 고유 식별 가능하도록 tag 부여(SemVer 2.0.0). 버전 체계·태그 정책·변경 통제 절차의
+  상세는 Configuration Management Plan §3·§4를 참조.
 
 ## 6 Documentation Activities
 
