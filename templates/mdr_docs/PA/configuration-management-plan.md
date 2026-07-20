@@ -51,7 +51,7 @@ SDMP(Software Development and Maintenance Plan)는 본 문서를 참조합니다
 
 {SCOPE_DESCRIPTION}
 
-## 2. Configuration Identification (IEC 62304 §8.1, §5.1.10)
+## 2. Configuration Identification
 
 > 형상 항목(Configuration Item, CI)을 식별하는 기준을 정의하세요. 각 CI는 고유 식별자·버전을 갖는다.
 
@@ -66,7 +66,7 @@ SDMP(Software Development and Maintenance Plan)는 본 문서를 참조합니다
 | -------------- | ----------------- | -------------- |
 | {CI_CATEGORY}  | {CI_NAMING}       | {CI_TOOL}      |
 
-## 3. Version Control (IEC 62304 §5.1.9, ISO 13485 7.5)
+## 3. Version Control
 
 > 버전 네이밍 체계와 태그 정책을 정의하세요. 시맨틱 버저닝(MAJOR.MINOR.PATCH) 권장.
 
@@ -74,7 +74,7 @@ SDMP(Software Development and Maintenance Plan)는 본 문서를 참조합니다
 * 태그 정책: {TAG_POLICY} (각 release 커밋에 tag 부여, 과거 버전 복원 가능해야 함)
 * 버전 관리 도구: Git
 
-## 4. Change Control (IEC 62304 §8.2)
+## 4. Change Control
 
 > 변경 통제 절차를 기술하세요. SOP Change Management와 연계.
 
@@ -85,20 +85,20 @@ SDMP(Software Development and Maintenance Plan)는 본 문서를 참조합니다
 * 변경 요청 기록: {CHANGE_REQUEST_LOCATION}
 * 승인 권한자: {CHANGE_APPROVER}
 
-## 5. Configuration Status Accounting (IEC 62304 §8.3)
+## 5. Configuration Status Accounting
 
 > 형상 상태 기록(status accounting) — 현재 각 CI의 버전·상태를 추적·보고하는 방법.
 
 {STATUS_ACCOUNTING_METHOD}
 
-## 6. Configuration Audit (IEC 62304 §8.4)
+## 6. Configuration Audit
 
 > 형상 감사 일정·기준. 기능/물리 형상 감사(Functional/Physical Configuration Audit).
 
 * 감사 주기: {AUDIT_FREQUENCY}
 * 감사 기준: {AUDIT_CRITERIA}
 
-## 7. Configuration Item Control Before Verification (IEC 62304 §5.1.11)
+## 7. Configuration Item Control Before Verification
 
 > 검증 활동 시작 전, 검증 대상 형상 항목이 통제되어야 함. 검증 대상 CI 식별·고정 방법.
 
