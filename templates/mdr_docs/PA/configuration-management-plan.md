@@ -8,7 +8,10 @@ SDMP(Software Development and Maintenance Plan)는 본 문서를 참조합니다
 작성 전 반드시 다음 문서를 참조하세요:
   - 소프트웨어 개발 및 유지보수 계획서(software-development-maintenance-plan.md): 개발 워크플로우, 도구 체인
   - 시스템 요구사항 명세서(system-requirements-spec.md): 타겟 환경, 구성 항목 후보
-  - SOP Change Management: 변경 통제 절차
+  - SOP Change Management (회사 QMS 자산; 시드 템플릿 global/qms/sop-change-management.md):
+    회사 수준의 변경 평가·통제 절차. CMP는 본 기기의 형상관리를, SOP는 회사 전체의
+    변경 통제 절차를 다룬다(상호 보완). 첫 기기 개발 시 회사 QMS asset이 아직 없으면
+    상기 시드 템플릿으로 자사 SOP를 먼저 작성할 것.
 
 작성 지침:
 1. Section 2 (형상 식별): 형상 항목(CI) 후보를 식별하세요 — 소스 코드, 빌드 스크립트, SOUP, 문서, 환경 설정
